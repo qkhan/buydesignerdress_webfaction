@@ -1,0 +1,91 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Accordion - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href='{% static "css/accordian_style.css" %}' rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$(function() {
+  var activeTab = 0;
+  $(".accordion div").each(function(i, el) {
+    if ($(el).find(".active").length) {
+      activeTab = i;
+    }
+  });
+  $(".accordion").accordion({
+    active: activeTab,
+    collapsible: true,
+  });
+});
+</script>
+<style>
+#side-nav {
+width: 300px;
+}
+
+#side-nav a {
+display: block;
+}
+.active {
+  background-color: #d5ecd5;
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+    border: 1px solid #003eff;
+    background: #4fbfa8;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid #c5c5c5;
+    background: #4fbfa8;
+    font-weight: normal;
+    color: #ffffff;
+}
+</style>
+</head>
+<body>
+  <div class="panel panel-default sidebar-menu">
+  <div class="panel-body">
+      <ul class="nav nav-pills nav-stacked category-menu">
+        <div class="accordion" role="tablist">
+
+          {% for prospect_obj in prospect_list %}
+
+              {% if prospect_obj.prospect == prospect_type %}
+                  <h3 style="background-color: white;color: #4fbfa8;font-weight: 600;">{{prospect_obj.prospect}}</h3>
+                    <div class="group">
+                      <ul>
+                        {% for category_obj in category_list %}
+                            {% if category_obj.categoryName == category_type %}
+                            <li><a class="active"  href="{% url 'product_list' prospect_type=prospect_type category_type=category_type %}">{{category_obj.categoryName}}</a></li>
+                            {% else %}
+                            <li><a class=""  href="{% url 'product_list' prospect_type=prospect_obj.prospect category_type=category_obj.categoryName %}">{{category_obj.categoryName}}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+              {% else %}
+              <h3>{{prospect_obj.prospect}}</h3>
+                <div class="group">
+                  <ul>
+                    {% for category_obj in category_list %}
+                        <li><a href="{% url 'product_list' prospect_type=prospect_obj.prospect category_type=category_obj.categoryName %}">{{category_obj.categoryName}}</a></li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+          {% endfor %}
+        </div><!-- accordian -->
+  </ul>
+</div>
+</div>
+</body>
+</html>

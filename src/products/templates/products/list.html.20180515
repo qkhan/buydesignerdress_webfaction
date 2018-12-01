@@ -1,0 +1,24 @@
+<!-- {'paginator': None,
+      'page_obj': None,
+      'is_paginated': False,
+      'object_list':
+          <QuerySet [<Product: 1 - Iphone>,
+                     <Product: 2 - Commissions>]
+          >,
+          'product_list':
+              <QuerySet [<Product: 1 - Iphone>,
+                        <Product: 2 - Commissions>]
+           >,
+           'view': <products.views.ProductListView object at 0x103d8fcc0>} -->
+
+<H1>Loankit List View</H1>
+{{ paginator }}<BR>
+{{ page_obj }}<BR>
+{{ is_paginated }}<BR>
+{{ object_list }}<BR>
+{{ product_list }}<BR>
+{{ view }}
+
+{% for obj in object_list %}
+  <BR>{{ obj.title }}<BR>
+{% endfor %}

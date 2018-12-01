@@ -1,0 +1,137 @@
+from django import forms
+#from django.forms.extras.widgets import SelectDateWidget
+from .models import Item
+
+from django.utils.text import slugify
+
+SOME_CHOICES = [
+    ('db-value', 'Display Value'),
+    ('db-value2', 'Display Value2'),
+    ('db-value3', 'Display Value3'),
+]
+
+
+INTS_CHOICES = [tuple([x,x]) for x in range(0, 102)]
+
+YEARS = [x for x in range(1980, 2031)]
+
+
+
+
+class ItemModelForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = [
+        "slug",
+        "sku",
+        "title",
+        "price",
+        "weight",
+        "cartDesc",
+        "shortDesc",
+        "longDesc",
+        "thumb",
+        "image1",
+        "image2",
+        "image3",
+        "categoryID",
+        #"updateDate",
+        #"timestamp",
+        "stock",
+        "live",
+        "itemLimited",
+        "location",
+        "featured",
+        "active",
+        ]
+        widgets = {
+          # 'email': forms.EmailInput(attrs={'class': 'form-control custom-class'}),
+          #'slug': forms.SlugInput(attrs={'class': 'form-control custom-class'}),
+          # 'sku': forms.CharField(attrs={'class': 'form-control custom-class'}),
+          'title': forms.TextInput(attrs={'class': 'form-control custom-class'}),
+          # 'price': forms.DecimalField(attrs={'class': 'form-control custom-class'}),
+          # 'weight': forms.DecimalField(attrs={'class': 'form-control custom-class'}),
+          # 'cartDesc': forms.CharField(attrs={'class': 'form-control custom-class'}),
+          # 'shortDesc': forms.CharField(attrs={'class': 'form-control custom-class'}),
+          # 'longDesc': forms.TextField(attrs={'class': 'form-control custom-class'}),
+          # 'thumb' : forms.ImageField(attrs={'class': 'form-control custom-class'}),
+          # 'image1' : forms.ImageField(attrs={'class': 'form-control custom-class'}),
+          # 'image2' : forms.ImageField(attrs={'class': 'form-control custom-class'}),
+          # 'image3' : forms.ImageField(attrs={'class': 'form-control custom-class'}),
+          # 'categoryID': forms.ForeignKey(attrs={'class': 'form-control custom-class'}),
+          # 'updateDate': forms.DateTimeField(attrs={'class': 'form-control custom-class'}),
+          # 'timestamp': forms.DateTimeField(attrs={'class': 'form-control custom-class'}),
+          # 'stock': forms.DecimalField(attrs={'class': 'form-control custom-class'}),
+          # 'live' : forms.BooleanField(attrs={'class': 'form-control custom-class'}),
+          # 'itemLimited': forms.BooleanField(attrs={'class': 'form-control custom-class'}),
+          # 'location' : forms.CharField(attrs={'class': 'form-control custom-class'}),
+          # 'featured': forms.BooleanField(attrs={'class': 'form-control custom-class'}),
+          # 'active' : forms.BooleanField(attrs={'class': 'form-control custom-class'}),
+        }
+        exclude = ["height_field","width_field"]
+        labels = {
+            "slug":"Slug",
+            "sku":"Sku",
+            "title":"Title",
+            "price":"Price",
+            "weight":"Weight",
+            "cartDesc":"Cart Desc",
+            "shortDesc":"Short Desc",
+            "longDesc":"Long Desc",
+            "thumb":"Thumb",
+            "image1":"Image1",
+            "image2":"Image2",
+            "image3":"Image3",
+            "categoryID":"Category ID",
+            "updateDate":"Update Date",
+            "timestamp":"Time Stamp",
+            "stock":"Stock",
+            "live":"Live",
+            "itemLimited":"Item Limited",
+            "location":"Location",
+            "featured":"Featured",
+            "active":"Active",        }
+        help_text = {
+            "title": "this is title label",
+            "slug": "This is slug",
+        }
+        error_messages = {
+            "title": {
+                "max_length": "This title is too long.",
+                "required": "This title field is required",
+            },
+            "slug": {
+                "max_length": "This title is too long",
+                "required": "This title field is required",
+                "unique" :  "The slug field must be unique",
+            }
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ItemModelForm, self).__init__(*args, **kwargs)
+        self.fields["title"].error_messages = {
+                "max_length": "This title is too long.",
+                "required": "This title field is required",
+        }
+        self.fields["slug"].error_messages = {
+                "max_length": "This title is too long.",
+                "required": "This title field is required",
+        }
+
+        for field in self.fields.values():
+            field.error_messages = {
+                'required': "You know, {fieldname} is required".format(fieldname=field.label),
+            }
+
+    def clean_title(self, *args, **kwargs):
+        title = self.cleaned_data.get("title")
+        print (title)
+        return title
+
+    def save(self, commit=True, *args, **kwargs):
+        obj = super(ItemModelForm, self).save(commit=False, *args, **kwargs)
+        obj.slug = slugify(obj.title)
+        obj.publish = "2018-05-04"
+        if commit:
+            obj.save()
+        return obj

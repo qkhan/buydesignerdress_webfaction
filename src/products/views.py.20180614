@@ -1,0 +1,136 @@
+from django.views.generic import ListView, DetailView
+
+from django.shortcuts import render
+from django.http import Http404
+from items.models import Item, Brand, Category, Prospect, Size, Color
+from items.models import ProductType, Category, Prospect
+from django.utils import timezone
+from itertools import chain
+import pdb
+# Create your views here.
+
+# class ProductListView(ListView):
+#
+#     model = Product
+#     print ("ProductListView")
+#     template_name = "products/product_list.html"
+#
+#     def get_queryset(self, *args, **kwargs):
+#         #qs = super(BookListView, self).get_queryset(*args, **kwargs).filter(title__startswith="Ye")
+#         qs = super(ProductListView, self).get_queryset(*args, **kwargs).order_by("-productTimestamp")
+#         print ("QK1:", qs)
+#         return qs
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(ProductListView, self).get_context_data(**kwargs)
+#         context['now'] = timezone.now()
+#         return context
+
+
+class ProductListView(ListView):
+    #queryset = Product.objects.all()
+    template_name = "products/list.html"
+
+    def get_success_url(self):
+        return reverse("product_list")
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductListView, self).get_context_data(*args, **kwargs)
+
+        #color = Option.objects.filter(optionGroupId='1')
+        # context['color_list'] = color
+        # context['size_list'] = size
+        # context['brand_list'] = brands
+        # context['prospect_list'] = prospects
+        # context['category_list'] = categories
+        print ("ARGS: ", self.kwargs)
+        prospect_type = self.kwargs.get('prospect_type')
+        category_type = self.kwargs.get('category_type')
+        color = Color.objects.all()
+        size = Size.objects.all()
+        brands = Brand.objects.all()
+        prospects = Prospect.objects.all()
+        categories = Category.objects.all()
+        product_types = ProductType.objects.all()
+        clothing_category = Category.objects.filter(productType__productType='Clothing')
+        shoes_category = Category.objects.filter(productType__productType='Shoes')
+        accessories_category = Category.objects.filter(productType__productType='Accessories')
+        featured_category = Category.objects.featured()
+        look_and_trends_category = Category.objects.lookAndTrend()
+        prospect_list = Prospect.objects.all()
+        item_list = Item.objects.all()
+        context = {
+            "color_list": color,
+            "size_list" : size,
+            "brand_list": brands,
+            "content": "This is content for the home page",
+            "prospect_list": prospects,
+            "category_list": categories,
+            "product_types": product_types,
+            "clothing_category": clothing_category,
+            "shoes_category": shoes_category,
+            "accessories_category": accessories_category,
+            "featured_category": featured_category,
+            "look_and_trends_category": look_and_trends_category,
+            "prospect_list": prospect_list,
+            "item_list": item_list,
+            "prospect_type": prospect_type,
+            "category_type": category_type,
+        }
+
+        print("QK")
+        print(context)
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+
+        # self.id, self.optionName, self.optionGroupId
+        #color = Option.objects.filter(optionGroupId='1')
+        color = Color.objects.all()
+        #pdb.set_trace()
+        #print("Color:", color)
+        #size = Option.objects.filter(optionGroupId='2')
+        #print("Size:", size)
+
+        #print("Brands:", brands)
+        #categories = Category.objects.all()
+        #print("Categories:", categories)
+        # categories = Category.objects.all()
+        items = Item.objects.all()
+        #results = chain(items, color, size, brands, categories)
+        return Item.objects.all()
+        #return results
+
+class ProductDetailSlugView(DetailView):
+    queryset = Item.objects.all()
+    template_name = "products/detail.html"
+
+    def get_object(self, *args, **kwargs):
+        request = self.request
+        slug = self.kwargs.get('slug')
+        try:
+            instance = Item.objects.get(slug=slug, active=True)
+        except Item.DoesNotExist:
+            raise Http404("Not Found")
+        except Item.MultipleObjectsReturned:
+            qs = Item.objects.filter(slug=slug, active=True)
+            instance = qs.first()
+        except:
+            raise Http404("Issue accessing the web page")
+        return instance
+
+
+class ProductDetailView(DetailView):
+    queryset = Item.objects.all()
+    template_name = "products/detail.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
+        print(context)
+        return context
+
+    def get_queryset(self, *args, **kwargs):
+        request = self.request
+        pk = self.kwargs.get('pk')
+        return Product.objects.filter(pk=pk)

@@ -1,0 +1,24 @@
+from django import forms
+
+from .models import Item
+from django.utils.text import slugify
+
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = [
+            'title',
+            'shortDesc',
+        ]
+
+    def clean_title(self):
+        title = self.cleaned_data["title"]
+        slug  = slugify(title)
+        try:
+            item = Item.objects.get(slug=slug)
+            raise forms.ValidationError("Title Already Exists. Please try a different one.")
+        except Item.DoesNotExist:
+            return title
+        except:
+            raise forms.ValidationError("Title Already Exists. Please try a different one.")

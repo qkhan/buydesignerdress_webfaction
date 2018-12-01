@@ -1,0 +1,35 @@
+{% load static %}
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Colours <a class="btn btn-xs btn-danger pull-right" href="#"><i class="fa fa-times-circle"></i> Clear</a></h3>
+    </div>
+
+    <div class="panel-body">
+
+        <form action='{% url 'product_list' prospect_type=prospect_type category_type=category_type %}' method='GET'>{% csrf_token %}
+            <div class="form-group">
+                {% for color in color_list %}
+                <div class="checkbox">
+                    <label>
+                      {% if color.color_name in values_from_color_checkbox %}
+                        <input name="color_checkbox_val" value="{{color.color_name}}" type="checkbox" checked> <span class="colour {{color.color_name}}"></span> {{color.color_name}} (14)
+                      {% else %}
+                        <input name="color_checkbox_val" value="{{color.color_name}}" type="checkbox" > <span class="colour {{color.color_name}}"></span> {{color.color_name}} (14)
+                      {% endif %}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="btn btn-default btn-sm btn-primary"><i class="fa fa-pencil"></i> Apply</button>
+
+        </form>
+
+    </div>
+</div>
+<!-- {% if color.color_name == color_checkbox_val %}
+<input name="color_checkbox_val" value="{{color.color_name}}" type="checkbox" checked> <span class="colour {{color.color_name}}"></span> {{color.color_name}} (14)
+{% else %}
+  <input name="color_checkbox_val" value="{{color.color_name}}" type="checkbox"><span class="colour {{color.color_name}}"></span> {{color.color_name}} (14)
+{% endif %} -->

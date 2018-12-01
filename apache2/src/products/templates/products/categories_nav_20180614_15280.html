@@ -1,0 +1,46 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Accordion - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href='{% static "css/accordian_style.css" %}' rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#accordion" ).accordion();
+  } );
+  </script>
+</head>
+<body>
+<div class="panel panel-default sidebar-menu">
+  <div class="panel-body">
+      <ul class="nav nav-pills nav-stacked category-menu">
+        <div id="accordion">
+          {% for prospect_obj in prospect_list %}
+              {% if prospect_obj.prospect == prospect_type %}
+              <li class="active">
+              {% else %}
+              <li>
+              {% endif %}
+              <h3><a class='acc_link' href="category.html">{{prospect_obj.prospect}} <span class="badge pull-right">42</span></a></h3>
+              <div class="group">
+                  <ul>
+                      {% for category_obj in category_list %}
+                      <li><a href="category.html">{{ category_obj }}</a>
+                      </li>
+                      {% endfor %}
+                  </ul>
+              </div>
+          {% endfor %}
+        </div><!-- accordian -->
+
+      </ul>
+    </div>
+</div>
+
+</body>
+</html>

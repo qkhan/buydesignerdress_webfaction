@@ -1,0 +1,32 @@
+ Category.objects.filter(productType__productType='Clothing')
+
+>>> category = Category.objects.all()
+>>> for categ in category:
+...     print ("ID: {} = Name: {}".format(categ.productType.pk, categ.productType.productType))
+...
+ID: 1 = Name: Clothing
+ID: 1 = Name: Clothing
+ID: 1 = Name: Clothing
+ID: 2 = Name: Shoes
+ID: 2 = Name: Shoes
+ID: 2 = Name: Shoes
+ID: 2 = Name: Shoes
+ID: 3 = Name: Accessories
+ID: 3 = Name: Accessories
+ID: 3 = Name: Accessories
+ID: 3 = Name: Accessories
+>>> for categ in category:
+...     print ("ID: {} = Name: {} = Type: {}".format(categ.productType.pk, categ.categoryName, categ.productType.productType))
+...
+ID: 1 = Name: Designer dress = Type: Clothing
+ID: 1 = Name: Shirts = Type: Clothing
+ID: 1 = Name: T-Shirt = Type: Clothing
+ID: 2 = Name: Trainers = Type: Shoes
+ID: 2 = Name: Sandal = Type: Shoes
+ID: 2 = Name: Hiking Shoes = Type: Shoes
+ID: 2 = Name: Casual = Type: Shoes
+ID: 3 = Name: Iphone = Type: Accessories
+ID: 3 = Name: Android Tablet = Type: Accessories
+ID: 3 = Name: Ipad = Type: Accessories
+ID: 3 = Name: Headphones = Type: Accessories
+>>>

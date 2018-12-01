@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="panel panel-default sidebar-menu">
+
+    <div class="panel-heading">
+        <h3 class="panel-title">Categories</h3>
+    </div>
+
+    <div class="panel-body">
+      <div id="accordion">
+        <ul class="nav nav-pills nav-stacked category-menu">
+            {% for prospect_obj in prospect_list %}
+                {% if prospect_obj.prospect == prospect_type %}
+
+                      <li class="active">
+                      {% else %}
+                      <li>
+                      {% endif %}
+                          <a href="category.html">{{prospect_obj.prospect}} <span class="badge pull-right">42</span></a>
+                          <div class="group">
+                          <ul>
+                              {% for category_obj in category_list %}
+                              <li><a href="category.html">{{ category_obj }}</a>
+                              </li>
+                              {% endfor %}
+                          </ul>
+                          </div>
+                      </li>
+
+
+        {% endfor %}
+      </ul>
+    </div>
+    </div>
+</div>
+{% endblock content %}

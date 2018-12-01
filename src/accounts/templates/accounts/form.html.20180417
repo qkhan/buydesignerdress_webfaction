@@ -1,0 +1,50 @@
+
+{% load widget_tweaks %}
+<form method="post">
+	{% csrf_token %}
+
+	{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+	{% endfor %}
+
+	{% for field in form.visible_fields %}
+		<div class="form-group">
+			<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+			{{ field|add_class:'form-control' }}
+			<!-- {{ form.errors.field }} -->
+			<!-- {% for error in form.errors %}
+				<span class="help-block">{{ error }}</span>
+			{% endfor %} -->
+		</div>
+	{% endfor %}
+
+	<div class="form-group">
+		<button type="submit" class="btn btn-success">
+			<span class="glyphicon glyphicon-ok"></span> Save
+		</button>
+		<a href="{% url 'home' %}" class="btn btn-default">Cancel</a>
+	</div>
+</form>
+
+<!-- <form method='POST' action='.'>{% csrf_token %}
+	{{ form.as_p }}
+	<div class="text-center">
+			<button type="submit" class="btn btn-primary"><i class="fa fa-user-md"></i> Register</button>
+	</div>
+</form> -->
+<!-- <div class="form-group">
+		<label for="name">Name</label>
+		<input type="text" class="form-control" id="name">
+</div>
+<div class="form-group">
+		<label for="email">Email</label>
+		<input type="text" class="form-control" id="email_register" name="email_register">
+</div>
+<div class="form-group">
+		<label for="password">Password 1</label>
+		<input type="password" class="form-control" id="password1" name="password1">
+</div>
+<div class="form-group">
+		<label for="password">Password 2</label>
+		<input type="password" class="form-control" id="password2" name="password2">
+</div> -->

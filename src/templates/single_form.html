@@ -1,0 +1,33 @@
+{% load crispy_forms_tags %}
+<div class='row'>
+<div class='col-sm-6 col-sm-offset-3'>
+<style>
+.button {
+    background-color: #f44336;; /* Orange */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+</style>
+
+{% if title %}
+<h1 class='{% if title_align_center %}text-align-center{% endif %}'>{{ title }}</h1>
+{% endif %}
+<!-- <button class="button" style="float: right;">Add New Material / Care</button> -->
+
+<form method='POST' action='' enctype="multipart/form-data">{% csrf_token %}
+{{ form|crispy }}
+
+<input class='button' style="float: right;" type='submit'
+  value='{% if btn_title %}{{ btn_title }} {% else %}Submit{% endif %}' />
+
+</form>
+</div>
+</div>

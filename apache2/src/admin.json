@@ -1,0 +1,4 @@
+Clean QUERY 1:  <django.forms.fields.CharField object at 0x7eff34df7e10>
+Hello Qaisar Khan
+Hello Qaisar
+[{"model": "admin.logentry", "pk": 1, "fields": {"action_time": "2018-05-31T03:09:22.540Z", "user": 1, "content_type": 10, "object_id": "1", "object_repr": "1 - Sana Safinaz", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 2, "fields": {"action_time": "2018-05-31T03:09:27.511Z", "user": 1, "content_type": 10, "object_id": "2", "object_repr": "2 - Breeze", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}, {"model": "admin.logentry", "pk": 3, "fields": {"action_time": "2018-05-31T03:09:32.135Z", "user": 1, "content_type": 10, "object_id": "3", "object_repr": "3 - Khaadi", "action_flag": 1, "change_message": "[{\"added\": {}}]"}}]

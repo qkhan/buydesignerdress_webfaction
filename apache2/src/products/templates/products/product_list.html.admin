@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<ul>
+{% for product in object_list %}
+    <li>{{ product.productUpdateDate|date }} - <a href="{{ product.get_absolute_url }}">{{ product.productName }}</a></li>
+{% empty %}
+    <li>No Products yet.</li>
+{% endfor %}
+</ul>
+{% endblock %}

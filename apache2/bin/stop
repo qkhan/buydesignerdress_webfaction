@@ -1,0 +1,3 @@
+#!/bin/bash
+
+LD_LIBRARY_PATH=/home/qaisar/webapps/buydesignerdress/apache2/lib:/home/qaisar/webapps/buydesignerdress/lib /home/qaisar/webapps/buydesignerdress/apache2/bin/httpd.worker -f /home/qaisar/webapps/buydesignerdress/apache2/conf/httpd.conf -k stop

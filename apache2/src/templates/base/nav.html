@@ -1,0 +1,153 @@
+
+{% load static %}
+{% url 'home' as home_url %}
+{% url 'category' as category_url %}
+{% url 'contact' as contact_url %}
+{% url 'product:list' as product_list_url %}
+{% url 'cart:home' as cart_url %}
+{% url 'about' as about_url %}
+{% url 'register' as register_url %}
+{% url 'login' as login_url %}
+{% url 'logout' as logout_url %}
+<!-- *** NAVBAR ***
+_________________________________________________________ -->
+
+<div class="navbar navbar-default yamm" role="navigation" id="navbar">
+    <div class="container">
+        <div class="navbar-header">
+
+            <a class="navbar-brand home" href="{{ home }}" data-animate-hover="bounce">
+                <img src='{% static "img/finsure_logo.png" %}' alt="Obaju logo" class="hidden-xs">
+                <img src='{% static "img/finsure_logo.png" %}' alt="Obaju logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
+            </a>
+            <div class="navbar-buttons">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                    <span class="sr-only">Toggle navigation</span>
+                    <i class="fa fa-align-justify"></i>
+                </button>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                    <span class="sr-only">Toggle search</span>
+                    <i class="fa fa-search"></i>
+                </button>
+                <a class="btn btn-default navbar-toggle" href="basket.html">
+                    <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">3 items in cart</span>
+                </a>
+            </div>
+        </div>
+        <!--/.navbar-header -->
+
+        <div class="navbar-collapse collapse" id="navigation">
+
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active"><a href={{ home_url }}>Home</a>
+                </li>
+                {% for prospect in prospect_list %}
+                <li class="dropdown yamm-fw">
+                    <a id='prospect_type' href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">{{prospect}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="yamm-content">
+                                <div class="row">
+                                   {% for product_type in product_types %}
+
+                                            {% if product_type.productType == 'Clothing' %}
+                                            <div class="col-sm-3">
+                                              <h5 id='product_type'>{{  product_type.productType }} </h5>
+                                              <ul>
+                                                {% for category in clothing_category %}
+                                                    <li class='nav_link'><a categoryName={{category.categoryName}} prospectName={{prospect}} href={% url 'product_list' prospect_type=prospect category_type=category %}>{{ category.categoryName }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                              </ul>
+                                              </div>
+                                            {% endif %}
+                                            {% if product_type.productType == 'Shoes' %}
+                                            <div class="col-sm-3">
+                                              <h5 id='product_type'>{{  product_type.productType }}</h5>
+                                              <ul>
+                                                {% for shoes in shoes_category %}
+                                                    <li class='nav_link'><a categoryName={{shoes.categoryName}} prospectName={{prospect}} href={% url 'product_list' prospect_type=prospect category_type=shoes %}>{{ shoes.categoryName }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                              </ul>
+                                            </div>
+                                            {% endif %}
+                                            {% if product_type.productType == 'Accessories' %}
+                                              <div class="col-sm-3">
+                                              <h5>{{  product_type.productType }}</h5>
+                                              <ul>
+                                                {% for accessory in accessories_category %}
+                                                    <li class='nav_link'><a categoryName={{accessory.categoryName}} prospectName={{prospect}} href={% url 'product_list' prospect_type=prospect category_type=accessory %}>{{ accessory.categoryName }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                              </ul>
+                                              </div>
+                                            {% endif %}
+
+                                   {% endfor %}
+                                    <div class="col-sm-3">
+                                        <h5>Featured</h5>
+                                        <ul>
+                                          {% for item in featured_category %}
+                                              <li><a href={% url 'product_list' prospect_type=prospect category_type=item %}>{{ item.categoryName }}</a>
+                                              </li>
+                                          {% endfor %}
+                                        </ul>
+                                        <h5>Looks and trends</h5>
+                                        <ul>
+                                          {% for item in look_and_trends_category %}
+                                              <li><a href={% url 'product_list' prospect_type=prospect category_type=item %}>{{ item.categoryName }}</a>
+                                              </li>
+                                          {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.yamm-content -->
+                        </li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+        <!--/.nav-collapse -->
+
+        <div class="navbar-buttons">
+
+            <div class="navbar-collapse collapse right" id="basket-overview">
+                <a href="basket.html" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">3 items in cart</span></a>
+            </div>
+            <!--/.nav-collapse -->
+
+            <div class="navbar-collapse collapse right" id="search-not-mobile">
+                <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                    <span class="sr-only">Toggle search</span>
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+
+        </div>
+
+        <div class="collapse clearfix" id="search">
+
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                    <span class="input-group-btn">
+
+  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+
+    </span>
+                </div>
+            </form>
+
+        </div>
+        <!--/.nav-collapse -->
+
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /#navbar -->
+
+<!-- *** NAVBAR END *** -->
