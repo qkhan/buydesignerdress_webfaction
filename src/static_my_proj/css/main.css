@@ -24,3 +24,87 @@
 .button3 {background-color: #f44336;} /* Red */
 .button4 {background-color: #e7e7e7; color: black;} /* Gray */
 .button5 {background-color: #555555;} /* Black */
+
+@media screen and (min-width: 0px) and (max-width: 700px) {
+   .div-desktop {    display: none;  }
+}
+@media screen and (min-width: 701px) and (max-width: 3000px) {
+   .div-desktop {    display: block;  }
+}
+
+.logo_img {
+    margin-top: -10px;
+    height: 70px;
+    width: 123px;
+}
+
+a {
+    color: #bf4fbb;
+    text-decoration: none;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    color: #c3c3c3;
+    background-color: #bf4fbb;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #c3c3c3;
+    background-color: #bf4fbb;
+}
+
+.btn-primary {
+    color: #ffffff;
+    background-color: #bf4fbb;
+    border-color: #bf4fbb;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+    color: #ffffff;
+    background-color: #bf4fbb;
+    border-color: #bf4fbb;
+}
+
+#hot h2 {
+    text-transform: uppercase;
+    font-size: 36px;
+    color: #bf4fbb;
+    font-weight: 100;
+    text-align: center;
+}
+
+.ribbon .theribbon {
+    position: relative;
+    width: 80px;
+    padding: 6px 20px 6px 20px;
+    margin: 30px 10px 10px -71px;
+    color: #fff;
+    background-color: #bf4fbb;
+    text-shadow: 0px 1px 2px #bbb;
+}
+.ribbon.new .theribbon {
+    background-color: #636363;
+    text-shadow: 0px 1px 2px #bbb;
+}
+#top {
+    background: #9940a9;
+    padding: 10px 0;
+}
+h1,h2,h3,h4 {
+    color: #bf4fbb;
+}
+
+#content .panel.sidebar-menu ul.nav ul li a {
+    position: relative;
+    font-weight: normal;
+    text-transform: none !important;
+    display: block;
+    padding: 10px 15px;
+    padding-left: 30px;
+    font-size: 12px;
+    color: #d800a8;
+}
+.active {
+    background-color: #ffc3fe !important;
+}

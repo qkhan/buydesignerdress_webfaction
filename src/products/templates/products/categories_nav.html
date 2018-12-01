@@ -37,14 +37,14 @@ display: block;
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
     border: 1px solid #003eff;
-    background: #4fbfa8;
+    background: #bf4fbb;
     font-weight: normal;
     color: #ffffff;
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
     border: 1px solid #c5c5c5;
-    background: #4fbfa8;
+    background: #bf4fbb;
     font-weight: normal;
     color: #ffffff;
 }
@@ -59,7 +59,7 @@ display: block;
           {% for prospect_obj in prospect_list %}
 
               {% if prospect_obj.prospect == prospect_type %}
-                  <h3 style="background-color: white;color: #4fbfa8;font-weight: 600;">{{prospect_obj.prospect}}</h3>
+                  <h3 style="background-color: white;color: #bf4fbb;font-weight: 600;">{{prospect_obj.prospect}}</h3>
                     <div class="group">
                       <ul>
                         {% for category_obj in category_list %}

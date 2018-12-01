@@ -6,7 +6,7 @@
 
             <div class="col-md-12">
                 <ul class="breadcrumb">
-                    <li><a href="/">Home</a>
+                    <li><a href="#">Home</a>
                     </li>
                     <li>{{ prospect_type }}</li>
                 </ul>
@@ -22,6 +22,8 @@
 
             <div class="col-md-9">
                 <div class="box div-desktop" style="display:none;">
+                    <h1>Commission</h1>
+                    <p>Commission Records are processed here.</p>
                 </div>
 
                 <div class="box info-bar div-desktop">

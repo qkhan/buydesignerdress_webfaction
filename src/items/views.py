@@ -116,7 +116,7 @@ class ItemListView(ListView):
         #qs = super(BookListView, self).get_queryset(*args, **kwargs).filter(title__startswith="Ye")
         qs = super(ItemListView, self).get_queryset(*args, **kwargs).order_by("-timestamp")
 
-        #print (qs)
+        print (qs)
         return qs
 
     def get_context_data(self, **kwargs):

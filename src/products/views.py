@@ -12,31 +12,8 @@ import pdb
 from django import template
 
 register = template.Library()
-# Create your views here.
-
-# class ProductListView(ListView):
-#
-#     model = Product
-#     print ("ProductListView")
-#     template_name = "products/product_list.html"
-#
-#     def get_queryset(self, *args, **kwargs):
-#         #qs = super(BookListView, self).get_queryset(*args, **kwargs).filter(title__startswith="Ye")
-#         qs = super(ProductListView, self).get_queryset(*args, **kwargs).order_by("-productTimestamp")
-#         print ("QK1:", qs)
-#         return qs
-#
-#     def get_context_data(self, **kwargs):
-#         context = super(ProductListView, self).get_context_data(**kwargs)
-#         context['now'] = timezone.now()
-#         return context
-
-
-
-
 
 class ProductListView(ListView):
-    #queryset = Product.objects.all()
     template_name = "products/list.html"
 
     def get_success_url(self):
@@ -45,20 +22,22 @@ class ProductListView(ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
+        print("CONTEXT")
+        print(context)
         #color = Option.objects.filter(optionGroupId='1')
-        print ("METHOD : ", self.request.method)
+        #print ("METHOD : ", self.request.method)
         for key in self.request.GET:
-            print("KEY: ",key)
+            #print("KEY: ",key)
             value = self.request.GET[key]
-            print("VAL: ",value)
+            #print("VAL: ",value)
 
         if self.request.method == 'GET':
             values_from_color_checkbox = self.request.GET.getlist('color_checkbox_val')
             values_from_brand_checkbox = self.request.GET.getlist('brand_checkbox_val')
-            print ("Values: ", values_from_color_checkbox)
+            #print ("Values: ", values_from_color_checkbox)
 
         # color_checkbox_val = self.request.GET["color_checkbox_val"]
-        # print ("color_checkbox_val", color_checkbox_val)
+        ##print ("color_checkbox_val", color_checkbox_val)
         # context['color_list'] = color
         # context['size_list'] = size
         # context['brand_list'] = brands
@@ -74,7 +53,7 @@ class ProductListView(ListView):
         color = Color.objects.all()
         self.get_color_list(values_from_color_checkbox, color)
         # for key in color_dict:
-        #     print ("KEY:", key)
+        #    #print ("KEY:", key)
 
         #[<Color: red>, <Color: blue>, <Color: green>, <Color: pink>, <Color: purple>, <Color: Yellow>, <Color: Brown>]
         #print(color.__dict__['_result_cache'][0])
@@ -91,18 +70,20 @@ class ProductListView(ListView):
         look_and_trends_category = Category.objects.lookAndTrend()
         prospect_list = Prospect.objects.all()
         prospectID = Prospect.objects.get(prospect=prospect_type)
-        categoryID = Category.objects.get(categoryName = category_type)
+        print ("Prospect ID: ", prospect_type)
+        categoryID = Category.objects.get(categoryName = category_type) 
+        for pros in prospect_list: 
+            print("Prospect: {0} =-= {1}".format(pros.id, pros))
 
         #colorID = color_dict[]
         # color_id_list = []
         # for col_name in values_from_color_checkbox:
-        #     print ("Col Name: {} -- {}".format(col_name, color_dict[col_name]))
+        #    #print ("Col Name: {} -- {}".format(col_name, color_dict[col_name]))
         #     color_id_list.append(str(color_dict[col_name]))
 
         #color_id_list = color_id_list.rstrip(",")
-        print ("COL LIST", self.color_id_list)
-        print ("categoryID: ", categoryID.id)
-        print ("Prospect ID: ", prospectID.id)
+       #print ("COL LIST", self.color_id_list)
+       #print ("categoryID: ", categoryID.id)
 
         if self.color_id_list and self.brand_id_list:
             item_list = Item.objects.filter(categoryID=categoryID, prospectID=prospectID, color__in=self.color_id_list, brand__in=self.brand_id_list)
@@ -113,7 +94,7 @@ class ProductListView(ListView):
         else:
             item_list = Item.objects.filter(categoryID=categoryID, prospectID=prospectID)
         # for item in item_list:
-        #     print('ID: {} Name: {}'.format(item.category_set.pk, item.category_set.categoryName))
+        #    #print('ID: {} Name: {}'.format(item.category_set.pk, item.category_set.categoryName))
         #print("ITEMS: ", item_list)
         context = {
             "color_list": color,
@@ -144,12 +125,12 @@ class ProductListView(ListView):
     def get_brand_list(self, values_from_brand_checkbox, brands):
         brand_dict = {}
         for col in brands:
-            print ("COl ID: {} --  NAME: {}".format(col.id, col.brandName))
+           #print ("COl ID: {} --  NAME: {}".format(col.id, col.brandName))
             brand_dict[col.brandName] = col.id
 
         self.brand_id_list = []
         for col_name in values_from_brand_checkbox:
-            print ("Col Name: {} -- {}".format(col_name, brand_dict[col_name]))
+           #print ("Col Name: {} -- {}".format(col_name, brand_dict[col_name]))
             self.brand_id_list.append(str(brand_dict[col_name]))
 
 
@@ -161,7 +142,7 @@ class ProductListView(ListView):
 
         self.color_id_list = []
         for col_name in values_from_color_checkbox:
-            print ("Col Name: {} -- {}".format(col_name, color_dict[col_name]))
+           #print ("Col Name: {} -- {}".format(col_name, color_dict[col_name]))
             self.color_id_list.append(str(color_dict[col_name]))
 
 
@@ -193,16 +174,16 @@ class ProductDetailSlugView(DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
-        print ("METHOD : ", self.request.method)
+       #print ("METHOD : ", self.request.method)
         for key in self.request.GET:
-            print("KEY: ",key)
+           #print("KEY: ",key)
             value = self.request.GET[key]
-            print("VAL: ",value)
+           #print("VAL: ",value)
 
         # if self.request.method == 'GET':
         #     values_from_color_checkbox = self.request.GET.getlist('color_checkbox_val')
         #     values_from_brand_checkbox = self.request.GET.getlist('brand_checkbox_val')
-        #     print ("Values: ", values_from_color_checkbox)
+        #    #print ("Values: ", values_from_color_checkbox)
 
         color = Color.objects.all()
         brands = Brand.objects.all()
@@ -217,11 +198,12 @@ class ProductDetailSlugView(DetailView):
         prospect_list = Prospect.objects.all()
 
         #request = self.request
+        #GET parameters from URL   
         slug = self.kwargs.get('slug')
         prospect_type = self.kwargs.get('prospect_type')
         category_type = self.kwargs.get('category_type')
-        print ("Prospect Type:", prospect_type)
-        print ("Category Type:", category_type)
+       #print ("Prospect Type:", prospect_type)
+       #print ("Category Type:", category_type)
         try:
             instance = Item.objects.get(slug=slug, active=True)
         except Item.DoesNotExist:
@@ -233,7 +215,7 @@ class ProductDetailSlugView(DetailView):
             raise Http404("Issue accessing the web page")
 
         #instance.colorQK = "red"
-        print ("Instance: ", instance)
+       #print ("Instance: ", instance)
         context = {
             "color_list": color,
             "brand_list": brands,
@@ -253,90 +235,3 @@ class ProductDetailSlugView(DetailView):
         }
 
         return context
-
-    # def get_context_data(self, *args, **kwargs):
-    #     context = super(ProductDetailSlugView, self).get_context_data(*args, **kwargs)
-    #     print ("METHOD : ", self.request.method)
-    #     for key in self.request.GET:
-    #         print("KEY: ",key)
-    #         value = self.request.GET[key]
-    #         print("VAL: ",value)
-    #
-    #     # if self.request.method == 'GET':
-    #     #     values_from_color_checkbox = self.request.GET.getlist('color_checkbox_val')
-    #     #     values_from_brand_checkbox = self.request.GET.getlist('brand_checkbox_val')
-    #     #     print ("Values: ", values_from_color_checkbox)
-    #     request = self.request
-    #     slug = self.kwargs.get('slug')
-    #     try:
-    #         instance = Item.objects.get(slug=slug, active=True)
-    #     except Item.DoesNotExist:
-    #         raise Http404("Not Found")
-    #     except Item.MultipleObjectsReturned:
-    #         qs = Item.objects.filter(slug=slug, active=True)
-    #         instance = qs.first()
-    #     except:
-    #         raise Http404("Issue accessing the web page")
-    #
-    #     # context = {
-    #     #     instance: instance,
-    #     #     # "color_list": color,
-    #     #     # "brand_list": brands,
-    #     #     # "content": "This is content for the home page",
-    #     #     # "prospect_list": prospects,
-    #     #     # "category_list": categories,
-    #     #     # "product_types": product_types,
-    #     #     # "clothing_category": clothing_category,
-    #     #     # "shoes_category": shoes_category,
-    #     #     # "accessories_category": accessories_category,
-    #     #     # "featured_category": featured_category,
-    #     #     # "look_and_trends_category": look_and_trends_category,
-    #     #     # "prospect_list": prospect_list,
-    #     #     # "prospect_type": prospect_type,
-    #     #     # "category_type": category_type,
-    #     #     # "values_from_color_checkbox": values_from_color_checkbox,
-    #     #     # "values_from_brand_checkbox": values_from_brand_checkbox,
-    #     #     #"color_checkbox_val": color_checkbox_val
-    #     # }
-    #
-    #     #print("QK")
-    #     #print(context)
-    #     return instance
-
-
-    # def get_object(self, *args, **kwargs):
-    #     request = self.request
-    #     slug = self.kwargs.get('slug')
-    #     try:
-    #         instance = Item.objects.get(slug=slug, active=True)
-    #     except Item.DoesNotExist:
-    #         raise Http404("Not Found")
-    #     except Item.MultipleObjectsReturned:
-    #         qs = Item.objects.filter(slug=slug, active=True)
-    #         instance = qs.first()
-    #     except:
-    #         raise Http404("Issue accessing the web page")
-    #
-    #     instance.colorQK = "red"
-    #     print ("Instance: ", instance)
-    #     return instance
-
-
-class ProductDetailView(DetailView):
-    queryset = Item.objects.all()
-    print("QUERY SET")
-    print(queryset)
-    template_name = "products/detail.html"
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(ProductDetailView, self).get_context_data(*args, **kwargs)
-        print("Context")
-        print(context)
-        return context
-
-    def get_queryset(self, *args, **kwargs):
-        request = self.request
-        pk = self.kwargs.get('pk')
-        print ("PK")
-        print (pk)
-        return Product.objects.filter(pk=pk)

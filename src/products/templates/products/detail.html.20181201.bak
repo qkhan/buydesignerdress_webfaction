@@ -8,7 +8,7 @@
 
     <div class="col-md-12">
         <ul class="breadcrumb">
-            <li><a href="/">Home</a>
+            <li><a href="#">Home</a>
             </li>
             <li><a href="#">Ladies</a>
             </li>
@@ -18,7 +18,7 @@
         </ul>
 
     </div>
-    <div class="col-md-3 div-desktop">
+    <div class="col-md-3">
         {% include 'products/categories_nav.html' with obj=object_list  prospect_type=prospect_type category_type=category_type %}
         {% include 'products/brands.html' with obj=object_list prospect_type=prospect_type category_type=category_type %}
         {% include 'products/colors.html' with obj=object_list prospect_type=prospect_type category_type=category_type %}
