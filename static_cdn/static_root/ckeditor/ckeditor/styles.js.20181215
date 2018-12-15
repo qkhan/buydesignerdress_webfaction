@@ -41,8 +41,7 @@ CKEDITOR.stylesSet.add( 'default', [
 		styles: {
 			padding: '5px 10px',
 			background: '#eee',
-			border: '1px solid #ccc',
-            width: '40px',
+			border: '1px solid #ccc'
 		}
 	},
 

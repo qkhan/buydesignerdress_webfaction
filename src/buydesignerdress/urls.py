@@ -34,6 +34,7 @@ urlpatterns = [
     path('about/', about_page, name='about'),
     path('items/', include('items.urls')),
     path('products/', include('products.urls')),
+    #path('search/', include('search.urls')),
     path('contact/', contact_page, name='contact'),
 ]
 if settings.DEBUG:
