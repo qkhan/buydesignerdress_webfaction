@@ -1,0 +1,17 @@
+<div class="col-12 col-md-4  col-md-offset-1">
+<div class="box">
+<h1>Continue as Guest</h1>
+<form method="POST" novalidate="" action='{% if action_url %}{{ action_url }}{% else %}{% url "login_checkout" %}{% endif %}' > {% csrf_token %}
+  
+{% if next %}
+<input type='hidden' name='next' value='{{ next }}' />
+{% endif %}
+      <div class="form-group">
+      <label for="id_email">Username / Email:</label>
+        <input type="email" name="email" class="form-control" id="id_email" required="">
+    </div>
+ 
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>

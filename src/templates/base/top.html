@@ -1,6 +1,7 @@
 {% load static %}
 {% url 'register' as register_url %}
 {% url 'item_list' as admin_url %}
+{% url 'logout' as logout_url %}
 <!-- *** TOPBAR ***
 _________________________________________________________ -->
 <div id="top">
@@ -16,12 +17,13 @@ _________________________________________________________ -->
                 <li><a href="{{ register_url }}">Register</a>
                 </li>
                 {% else %}
+                <li><a href="{{ logout_url }}">Logout</a>
                 <li><a href="{{ admin_url }}">Admin</a>
                 </li>
                 {% endif %}
 
 
-                <li><a href="contact.html">Contact</a>
+                <li><a href="{% url "contact" %}">Contact</a>
                 </li>
                 <li><a href="#">Recently viewed</a>
                 </li>

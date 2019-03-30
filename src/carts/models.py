@@ -1,8 +1,10 @@
+from decimal import Decimal
 from django.conf import settings
 from django.db import models
 from django.db.models.signals import pre_save, post_save, m2m_changed
 from items.models import Item
 import logging
+import math
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -20,11 +22,11 @@ class CartManager(models.Manager):
             new_obj = False
             cart_obj = qs.first()
             logger.info("REQUEST USER : {}".format(request.user))
-
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 logger.info("CART OBJ USER: {}".format(cart_obj.user))
                 cart_obj.save()
+            return cart_obj, new_obj
         else:
             cart_obj = Cart.objects.new(user=request.user)
             new_obj = True
@@ -46,6 +48,7 @@ class CartManager(models.Manager):
 class Cart(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='cart_user')
     products = models.ManyToManyField(Item, blank=True)
+    quantity = models.IntegerField(default=0)
     total    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     subtotal    = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     update   = models.DateTimeField(auto_now=True)
@@ -57,14 +60,16 @@ class Cart(models.Model):
         return str(self.id)
 
 
-
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
     logger.info("ACTION: {}".format(action))
+    print("ACTION: {}".format(action))
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
         products = instance.products.all()
         total = 0
         for x in products:
             total += x.price
+        #instance.total = total
+        #instance.save()
 
         if instance.subtotal != total:
             instance.subtotal = total
@@ -74,6 +79,9 @@ m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
 
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
-    instance.total = instance.subtotal * 1.1
+    if instance.subtotal > 0:
+        instance.total = format((Decimal(instance.subtotal) * Decimal(1.1)),'.2f')
+    else:
+        instance.total = 0.00
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)

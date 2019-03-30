@@ -1,0 +1,94 @@
+from django.db import models
+
+# Create your models here.
+from billing.models import BillingProfile
+from django.conf import settings
+import pdb
+User = settings.AUTH_USER_MODEL
+
+ADDRESS_TYPES = (
+    ('billing', 'Billing'),
+    ('shipping', 'Shipping'),
+)
+
+class AddressManager(models.Manager):
+    def new_or_get(self, request, billing_profile):
+        #address_type=request.POST.get('address_type')
+        #first_name =request.POST.get('firstname')
+        #last_name =request.POST.get('lastname')
+        #company=request.POST.get('company')
+        #street=request.POST.get('street')
+        #city=request.POST.get('city')
+        #postal_code=request.POST.get('postal_code')
+        #state=request.POST.get('state')
+        #country =request.POST.get('country')
+        #phone =request.POST.get('phone')
+        #print("Address Type")
+        #print(address_type)
+        address_dict = {}
+        #for k, v in request.POST.items():
+            #address_dict[k] = v
+            #if 'csrfmiddlewaretoken' not in k:
+                #print("Key: {0}, Value:{1}".format(k,v))
+                #address_dict[k] = v
+        #address_dict = request.POST.copy()
+        address_dict = request.POST.dict()
+        del address_dict['user']
+        del address_dict['csrfmiddlewaretoken']
+        print("Address Dict")
+        print(address_dict)
+        #<QueryDict: {'csrfmiddlewaretoken': ['toLBaALbkAoxUTUdRxR2xemXdCsa8VIoHVV3qJPY59BP1vd2PmKZoQSyeCzKLfrk'], 'state': ['NSW'], 'user': [''], 'postal_code': ['33'], 'firstname': ['Q', 'A', 'Khan', ''], 'city': ['22'], 'country': ['Australia'], 'address_type': ['billing']}>
+        #del request.POST['csrfmiddlewaretoken']
+        #del request.POST['user']
+        #print(" Addrerss Manager - request.POST")
+        #print(request.POST)
+
+        #obj, created = self.model.objects.get_or_create(billing_profile=billing_profile, 
+                                                        #address_type=address_type, street=street, 
+        if address_dict:                                                #)
+            address_dict['billing_profile'] = billing_profile
+            obj, created = self.model.objects.update_or_create(address_dict)
+            return obj, created
+        return {}, False
+        #obj = {}
+        #created = True
+        #return obj, created
+        #user = request.user
+        #guest_email_id = request.session.get('guest_email_id')
+        #created = False
+        #obj = None
+        ##if user.is_authenticated:
+            #print("User is there")
+            #print(user)
+            #obj, created = self.model.objects.get_or_create(user=user, email=user.email)
+        #elif guest_email_id is not None:
+            #print("logged in as Guest")
+            #guest_email_obj = GuestEmail.objects.get(id=guest_email_id)
+            #print(guest_email_obj)
+            #obj, created = self.model.objects.get_or_create(email=guest_email_obj.email)
+        #else:
+            #pass
+        #return obj, created
+
+
+class Address(models.Model):
+    billing_profile = models.ForeignKey(BillingProfile, null=True, blank=True, on_delete=models.CASCADE)
+    address_type    = models.CharField(max_length=120, choices=ADDRESS_TYPES)
+    firstname = models.CharField(max_length=120)
+    lastname  = models.CharField(max_length=120, null=True, blank=True)
+    company = models.CharField(max_length=120, null=True, blank=True)
+    street = models.CharField(max_length=120, null=True, blank=True)
+    city = models.CharField(max_length=120, null=True, blank=True)
+    postal_code = models.CharField(max_length=120, null=True, blank=True)
+    state           = models.CharField(max_length=120)
+    country         = models.CharField(max_length=120, default='Australia')
+    phone = models.CharField(max_length=120, default='Australia')
+    email = models.CharField(max_length=120, default='Australia')
+
+    objects = AddressManager()
+
+    def __str__(self):
+        return str(self.billing_profile)
+
+
+

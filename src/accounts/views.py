@@ -1,8 +1,10 @@
 from django.contrib.auth import login, get_user_model, logout
+from django.contrib.auth import authenticate
 from django.contrib import messages
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .forms import UserCreationForm, UserLoginForm
+from .forms import UserCreationForm, UserLoginForm, GuestForm
+from .models import GuestEmail
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.utils.http import is_safe_url
@@ -158,14 +160,64 @@ def user_login(request):
         response_data = {'login': "Failed"}
     return HttpResponse(JsonResponse(response_data))
 
-def user_login_djuser(request, *args, **kwargs):
-	form = UserLoginForm(request.POST or None)
-	if form.is_valid():
-		# print("user created")
-		user_obj = form.cleaned_data.get('user_obj')
-		login(request, user_obj)
-		return HttpResponseRedirect("/")
-	return render(request, "accounts/login.html", {"form": form})
+
+def guest_register_view(request, *args, **kwargs):
+    form = GuestForm(request.POST or None)
+    print("Form QAISAR")
+    print(form)
+    context = {
+        "form": form
+    }
+    print("Request")
+    print(request)
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
+    if form.is_valid():
+        print("Redirect Path QAISAR")
+        print(redirect_path)
+        email = form.cleaned_data.get('email')
+        new_guest_email = GuestEmail.objects.create(email=email)
+        request.session['guest_email_id'] = new_guest_email.id
+        
+        if is_safe_url(redirect_path, request.get_host()):
+            return redirect(redirect_path)
+        else:
+            return redirect("http://buydesignerdress.com/cart/")
+    return redirect("/register/")
+
+
+def login_page(request, *args, **kwargs):
+    form = UserLoginForm(request.POST or None)
+    context = {
+        "form": form
+    }
+    print("Request")
+    print(request)
+    next_ = request.GET.get('next')
+    next_post = request.POST.get('next')
+    redirect_path = next_ or next_post or None
+    if form.is_valid():
+        username = form.cleaned_data.get('query')
+        password = form.cleaned_data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            print("Redirect")
+            print(redirect_path)
+            try:
+                del request.session['guest_email_id']
+            except:
+                pass
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
+            else:
+                return redirect("http://buydesignerdress.com/cart/")
+        else:
+            print ("Not authenticated")
+            return redirect("http://buydesignerdress.com/cart/")
+    return redirect("/register/")
+
 
 
 def user_logout(request):

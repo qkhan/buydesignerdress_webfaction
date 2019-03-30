@@ -4,8 +4,9 @@ import random
 from django.db import models
 from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
-from .utils import unique_slug_generator
+from buydesignerdress.utils import unique_slug_generator
 from multiselectfield import MultiSelectField
+from django.db.models import Q
 import re
 
 
@@ -44,6 +45,11 @@ class ItemQuerySet(models.query.QuerySet):
     def featured(self):
         return self.filter(featured=True, active=True)
 
+    def search(self, query):
+        #lookups = Q(title__icontains=query) | Q(size__icontains=query) | Q(cartDesc__icontains=query) | Q(shortDesc__icontains=query) | Q(longDesc__icontains=query) | Q(fitting__icontains=query) | Q(color__icontains=query) | Q(price__icontains=query)
+        lookups = Q(title__icontains=query) | Q(size__icontains=query) |Q(cartDesc__icontains=query) | Q(shortDesc__icontains=query) | Q(longDesc__icontains=query) | Q(fitting__icontains=query) | Q(price__icontains=query) | Q(tag__title__icontains=query)
+        return self.filter(lookups).distinct()
+
 class ItemManager(models.Manager):
     def get_queryset(self):
         return ItemQuerySet(self.model, using=self._db)
@@ -59,6 +65,9 @@ class ItemManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return None
+
+    def search(self, query):
+        return self.get_queryset().search(query)
 
 class ProductType(models.Model):
     productType = models.CharField(max_length=250)
@@ -283,6 +292,10 @@ class Item(models.Model):
     def get_absolute_url_old(self):
         #return "/items/{slug}".format(slug=self.slug)
         return reverse("item_detail", kwargs={"slug": self.slug, "prospect_type": self.prospect_type, "category_type": self.category_type})
+
+    @property
+    def name(self):
+        return self.title
 
     class Meta:
         ordering = ["-timestamp", "-updated"]

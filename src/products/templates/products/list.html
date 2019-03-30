@@ -53,9 +53,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="row products">
                 {% for obj in item_list %}
-                {% include 'products/product_list.html' with obj=obj %}
+                {% include 'products/snippets/product_list.html' with obj=obj cart=cart %}
                 {% endfor %}
+                </div>
                 <div class="pages">
 
                     <p class="loadMore">

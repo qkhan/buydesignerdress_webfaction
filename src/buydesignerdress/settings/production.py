@@ -45,10 +45,16 @@ INSTALLED_APPS = [
     'django_archive',
     'ckeditor',
     'ckeditor_uploader',
+    'cloudinary',
     'accounts',
     'products',
     'items',
     'carts',
+    'orders',
+    'search',
+    'tags',
+    'billing',
+    'addresses',
 ]
 
 MIDDLEWARE = [
@@ -156,6 +162,7 @@ STATIC_ROOT = "/home/qaisar/webapps/buydesignerdress_static_root/"
 MEDIA_URL = '/media/'
 MEDIA_ROOT = "/home/qaisar/webapps/buydesignerdress_media_root/"
 
+LOGOUT_REDIRECT_URL = '/register/'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 # CKEDITOR_CONFIGS = {
@@ -247,6 +254,16 @@ logging.config.dictConfig({
         # },
     },
 })
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config( 
+        cloud_name = "dmvnudxsw", 
+        api_key = "113854372633178", 
+        api_secret = "gA96t9MeAQQS1KKad7Q7RppZjAQ" 
+)
+#Environment variable: CLOUDINARY_URL=cloudinary://113854372633178:gA96t9MeAQQS1KKad7Q7RppZjAQ@dmvnudxsw
 
 # LOGGING = {
 #     'version': 1,

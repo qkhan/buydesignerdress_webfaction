@@ -14,12 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth.views import LogoutView
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from carts.views import cart_home
-from accounts.views import register,user_login, home, user_login_djuser, user_logout
+
+from carts.views import cart_detail_api_view
+from accounts.views import register,user_login, home, user_logout, login_page, guest_register_view
 from .views import home_page, about_page, contact_page, category_page
 
 urlpatterns = [
@@ -27,14 +29,19 @@ urlpatterns = [
     path('register/', register, name='register'),
     #path('login/', user_login_djuser, name='login'),
     path('login/', user_login, name='login'),
-    path('cart/', cart_home, name='cart'),
+    path('login_checkout/', login_page, name='login_checkout'),
+    path('register/guest', guest_register_view, name='guest_register'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    #path('cart/', cart_home, name='cart'),
+    path('cart/', include('carts.urls', namespace='cart')),
     path('logout/', user_logout),
+    path('api/cart/', cart_detail_api_view, name='api-cart'),
     path('', home_page, name='home'),
     path('category/', category_page, name='category'),
     path('about/', about_page, name='about'),
     path('items/', include('items.urls')),
     path('products/', include('products.urls')),
-    #path('search/', include('search.urls')),
+    path('search/', include('search.urls', namespace='search')),
     path('contact/', contact_page, name='contact'),
 ]
 if settings.DEBUG:

@@ -1,0 +1,53 @@
+[qaisar@web486 src]$ python3.5 manage.py shell
+Python 3.5.2 (default, Sep  4 2016, 00:09:30)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-17)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from tags.models import Tag
+>>> Tag.objects.all()
+<QuerySet [<Tag: red>, <Tag: black>]>
+>>> black = Tag.objects.last()
+>>> black
+<Tag: black>
+>>> black.products
+<django.db.models.fields.related_descriptors.create_forward_many_to_many_manager.<locals>.ManyRelatedManager object at 0x7f1a7b979748>
+>>> black.products.all()
+<ItemQuerySet [<Item: 19 - Formal Dress Image 1>, <Item: 12 - BLACK FANTASY>, <Item: 10 - GulAhmed Turquoise Spring/Summer 2017>]>
+>>> black.products.all().last
+<bound method QuerySet.last of <ItemQuerySet [<Item: 19 - Formal Dress Image 1>, <Item: 12 - BLACK FANTASY>, <Item: 10 - GulAhmed Turquoise Spring/Summer 2017>]>>
+>>> black.products.all().last()
+<Item: 10 - GulAhmed Turquoise Spring/Summer 2017>
+
+
+=-----------------
+
+Python 3.5.2 (default, Sep  4 2016, 00:09:30)
+[GCC 4.4.7 20120313 (Red Hat 4.4.7-17)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from items.models import Item
+>>> qs = Item.objects.all()
+>>> qs
+<ItemQuerySet [<Item: 23 - Kids 3>, <Item: 22 - Kids shirt 2>, <Item: 21 - Kids1>, <Item: 20 - Formal Dress 2>, <Item: 19 - Formal Dress Image 1>, <Item: 18 - Classic Jamawar Sherwani>, <Item: 17 - New PRODUCT>, <Item: 16 - Dynasty Boski Wash N Wear Unstitched Shalwar Kameez Graphite - Summer Collection>, <Item: 15 - Chanel - Eau de Parfum>, <Item: 14 - Summers and flowers>, <Item: 13 - BRIDAL SANDAL>, <Item: 12 - BLACK FANTASY>, <Item: 11 - Brown Female Kameez Shalwar>, <Item: 10 - GulAhmed Turquoise Spring/Summer 2017>, <Item: 9 - Maira Ahsan Embroidered Lawn Unstitched>, <Item: 8 - ADIDAS ORIGINALS BY ALEXANDER WANG>, <Item: 7 - 15 by James>, <Item: 6 - Giorgio Armani Code Colonia>, <Item: 5 - YELLOW STRIPED SHIRT>, <Item: 4 - Blue Unstitched Suit>, '...(remaining elements truncated)...']>
+>>> kid = qs.first()
+>>> kid
+<Item: 23 - Kids 3>
+>>> kid.title
+'Kids 3'
+>>> kid.description
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Item' object has no attribute 'description'
+>>> kid.shortDesc
+>>> kid.price
+Decimal('80.00')
+>>> kid.tag_set.all()
+<QuerySet [<Tag: black>]>
+>>> kid.tag_set.all()
+<QuerySet [<Tag: black>, <Tag: kid>]>
+>>> kid.tag_set.filter(title__iexact='black')
+<QuerySet [<Tag: black>]>
+
+kid.tag_set.filter(title__icontains='black')
+
+

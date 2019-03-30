@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.shortcuts import render
 from django.http import Http404
 from items.models import Item, Brand, Category, Prospect, Color, ProductType, Category
+from carts.models import Cart
 from django.utils import timezone
 from itertools import chain
 from django.forms.models import model_to_dict
@@ -96,6 +97,13 @@ class ProductListView(ListView):
         # for item in item_list:
         #    #print('ID: {} Name: {}'.format(item.category_set.pk, item.category_set.categoryName))
         #print("ITEMS: ", item_list)
+        
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        print ("CART OBJECT : PRODUCT LIST: ", cart_obj)
+        print ("NEW OBJECT: PRODUCT LIST: ", new_obj)
+        print ("CART OBJECT LIST: " , cart_obj.products.all())
+        #context['cart'] = cart_obj
+
         context = {
             "color_list": color,
             "brand_list": brands,
@@ -114,6 +122,7 @@ class ProductListView(ListView):
             "category_type": category_type,
             "values_from_color_checkbox": values_from_color_checkbox,
             "values_from_brand_checkbox": values_from_brand_checkbox,
+            "cart": cart_obj,
             #"color_checkbox_val": color_checkbox_val
         }
 

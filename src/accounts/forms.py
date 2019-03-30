@@ -15,6 +15,9 @@ User = get_user_model()
     #                                     code = 'invalide_username'
     #                                 )])
 
+class GuestForm(forms.Form):
+    email = forms.EmailField()
+
 class UserLoginForm(forms.Form):
     query = forms.CharField(label='Username / Email')
     password = forms.CharField(label='Password', widget=forms.PasswordInput)

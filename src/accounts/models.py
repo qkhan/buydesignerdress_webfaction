@@ -96,6 +96,15 @@ class MyUser(AbstractBaseUser):
     #     return self.is_admin
 
 
+class GuestEmail(models.Model):
+    email       = models.EmailField()
+    #active      = models.DateTimeField(default=True)
+    #update      = models.DateTimeField(auto_now=True)
+    #timestamp   = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
+
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,

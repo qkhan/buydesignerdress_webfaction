@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    {% if request.GET.q %} 
+    <div class='col-12 mb-3'>
+    Results for <b>{{ request.GET.q }}</b> 
+    </div>
+    {% else %}
+    <div class='col-12 mx-auto'>
+        <input class='form-control' type='text' placeholder="Search">
+    </div>
+    <br>
+
+    {% endif %}
+
+    <div class="row">
+        {% for item in object_list %}
+        <div class="col-md-3" style="padding:15px;">
+            <div style="display:inline-block; border:solid 1px #808080; padding:15px; height: 515px;">
+                <div>
+                    {% if item.thumb_image.url %}
+                    <a href="{{ item.get_customer_detail_url }}"><img src="{{ item.thumb_image.url }}" alt="icon" style="height: 275px; width:183px;" /></a>
+                    {% endif %}
+                    <br />
+                    <h4><a style="color: #864483; text-decoration: underline;" href="{{ item.get_customer_detail_url }}">{{ item.title }}</a></h4>
+                    <h4 class="float-xs-right">${{ item.price }}</h4>
+                    <p class="text-justify">{{ item.shortDesc|safe|truncatechars:100 }}</p>
+                </div>
+            </div>
+        </div>        
+        {% empty %}
+            <h1 style="color:red;">No Products</h1>
+        {% endfor %}
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#rating1').shieldRating({
+            max: 5,
+            step: 1,
+            value: 3,
+            markPreset: false
+        });
+
+        $('#rating2').shieldRating({
+            max: 5,
+            step: 1,
+            value: 4,
+            markPreset: false
+        });
+        $('#rating3').shieldRating({
+            max: 5,
+            step: 1,
+            value: 2,
+            markPreset: false
+        });
+        $('#rating4').shieldRating({
+            max: 5,
+            step: 1,
+            value: 3,
+            markPreset: false
+        });
+
+        $('#rating5').shieldRating({
+            max: 5,
+            step: 1,
+            value: 4,
+            markPreset: false
+        });
+        $('#rating6').shieldRating({
+            max: 5,
+            step: 1,
+            value: 2,
+            markPreset: false
+        });
+    });
+</script>
+
+<style>
+
+</style>
+{% endblock %}

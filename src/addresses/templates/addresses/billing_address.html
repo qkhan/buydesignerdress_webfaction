@@ -1,0 +1,180 @@
+{% load static %}
+{% url 'cart:shipping' as cart_shipping_url %}
+{% url 'cart:home' as cart_url %}
+{% block content %}
+
+<div class="container">
+
+    <div class="col-md-12">
+        <ul class="breadcrumb">
+            <li><a href="#">Home</a>
+            </li>
+            <li>Checkout - Address</li> {{ object.order_id }} -- {{ object.cart }} -- {{ b_address_obj.street }}
+        </ul>
+    </div>
+
+    <div class="col-md-9" id="checkout">
+
+        <div class="box">
+            <form method="post" action="{% url 'carts:checkout' %}"> {% csrf_token %}
+                <input type='hidden' name='user' value='{{ cart.user }}' />
+                <input type='hidden' name='address_type' value='shipping'/>
+                <input type='hidden' name='order_id' value='{{ object.order_id }}'/>
+                <h1>Checkout</h1>
+                <ul class="nav nav-pills nav-justified">
+                    <li class="active"><a href="#"><i class="fa fa-map-marker"></i><br>Address</a>
+                    </li>
+                    <li class="disabled"><a href="#"><i class="fa fa-truck"></i><br>Delivery Method</a>
+                    </li>
+                    <li class="disabled"><a href="#"><i class="fa fa-money"></i><br>Payment Method</a>
+                    </li>
+                    <li class="disabled"><a href="#"><i class="fa fa-eye"></i><br>Order Review</a>
+                    </li>
+                </ul>
+
+                <div class="content">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="firstname">Firstname</label>
+                                <input type="text" class="form-control" id="firstname" name="firstname" value="{{b_address_obj.firstname}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="lastname">Lastname</label>
+                                <input type="text" class="form-control" id="lastname" name="lastname" value="{{b_address_obj.lastname}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="company">Company</label>
+                                <input type="text" class="form-control" id="company" name="company" value="{{b_address_obj.company}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="street">Street {{ b_address_obj.street }} </label>
+                                <input type="text" class="form-control" id="street" name="street" value="{{b_address_obj.street}}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" class="form-control" id="city" name="city" value="{{b_address_obj.city}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label for="postal_code">ZIP</label>
+                                <input type="text" class="form-control" id="postal_code" name="postal_code" value="{{b_address_obj.postal_code}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <select class="form-control" id="state" name="state" value="{{b_address_obj.state}}">
+                                    <option value="NSW">NSW</option> 
+                                    <option value="VIC">VIC</option> 
+                                    <option value="QLD">QLD</option> 
+                                    <option value="TAS">TAS</option> 
+                                    <option value="ACT">ACT</option> 
+                                    <option value="WA">WA</option> 
+                                    <option value="NT">NT</option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="form-group">
+                                <label for="country">Country</label>
+                                <select class="form-control" id="country" name="country" value="{{b_address_obj.country}}">
+                                    <option value="Australia">Australia</option> 
+                                    <option value="NewZealand">NewZealand</option> 
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="phone">Telephone</label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="{{b_address_obj.phone}}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{{b_address_obj.email}}">
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </form>
+        <!-- /.box -->
+            <form method="post" action="{{ cart_shipping_url }}"> {% csrf_token %}
+                <input type='hidden' name='user' value='{{ cart.user }}' />
+                <input type='hidden' name='address_type' value='shipping'/>
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <a href="{{ cart_url }}" class="btn btn-default"><i class="fa fa-chevron-left"></i> Continue shopping</a>
+                    </div>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-primary">Continue to Delivery Method<i class="fa fa-chevron-right"></i>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+
+    </div>
+    <!-- /.col-md-9 -->
+
+    <div class="col-md-3">
+
+        <div class="box" id="order-summary">
+            <div class="box-header">
+                <h3>Order summary</h3>
+            </div>
+            <p class="text-muted">Shipping and additional costs are calculated based on the values you have entered.</p>
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Order subtotal</td>
+                            <th>{{ object.cart.total }}</th>
+                        </tr>
+                        <tr>
+                            <td>Shipping and handling</td>
+                            <th>{{ object.shipping_total }}</th>
+                        </tr>
+                        <tr>
+                            <td>Tax</td>
+                            <th>$0.00</th>
+                        </tr>
+                        <tr class="total">
+                            <td>Total</td>
+                            <th>{{ object.total }}</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.col-md-3 -->
+
+</div>
+<!-- /.container -->
+{% endblock content %}
