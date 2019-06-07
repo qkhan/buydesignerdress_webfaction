@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+{% url 'cart:update' as cart_update_url %}
+{% block content %}
+
+{% if not billing_profile %}
+    <div class='row text-center'>{{ object.order_id }} -- {{ object.cart }}
+            {% include "accounts/form_checkout.html" with form=login_form next=request.build_absolute_uri %}
+            {% url "guest_register" as guest_register_url %}
+            {{ guest_register_url }}
+            {% include "accounts/form_guest.html" with form=guest_form next=request.build_absolute_uri action_url=guest_register_url %}
+    </div>
+{% else %}
+        <h1>Qaisar Khan</h1>
+        {{ object.shipping_address }}
+         
+        {% if not object.shipping_address %}
+            {% include "accounts/form_checkout.html" with form=login_form next=request.build_absolute_uri %}
+            {% url "guest_register" as guest_register_url %}
+            {{ guest_register_url }}
+            {% include "addresses/shipping_address.html" with next=request.build_absolute_uri action_url=guest_register_url object=object %}
+        {% elif not object.billing_address %}
+        {% endif %}     
+{% endif %} 
+{% endblock content %}

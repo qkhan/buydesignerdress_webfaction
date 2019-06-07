@@ -16,7 +16,7 @@
     <div class="col-md-9" id="checkout">
 
         <div class="box">
-            <form method="post" action="{% url 'carts:checkout' %}"> {% csrf_token %}
+            <form method="post" action="{% url 'e_carts:checkout' %}"> {% csrf_token %}
                 <input type='hidden' name='user' value='{{ cart.user }}' />
                 <input type='hidden' name='address_type' value='shipping'/>
                 <input type='hidden' name='order_id' value='{{ object.order_id }}'/>

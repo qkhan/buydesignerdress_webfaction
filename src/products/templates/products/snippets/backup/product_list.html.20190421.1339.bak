@@ -1,0 +1,44 @@
+{% load static %}
+{% load cloudinary %}
+<div class="col-md-4 col-sm-6">
+  <div class="product">
+      <div class="flip-container">
+          <div class="flipper">
+              <div class="front">
+                  <a href="detail.html">
+                      {% if obj.image1.url %}
+                      <img src="{{ obj.image1.url }}" alt="" class="img-responsive" style="height: 275px; width:183px;">
+                      {% endif %}
+                  </a>
+              </div>
+              <div class="back">
+                  <a href="detail.html">
+                      {% if obj.image2.url %}
+                      <img src="{{ obj.image2.url }}" alt="" class="img-responsive" style="height: 275px; width:183px;">
+                      {% endif %}
+                  </a>
+              </div>
+          </div>
+      </div>
+      <a href="detail.html" class="invisible">
+          {% if obj.image3.url %}
+          <img src="{{ obj.image3.url }}" alt="" class="img-responsive" style="height: 275px; width:183px;">
+          {% endif %}
+      </a>
+                      <!-- {% cloudinary "obj.image2.url" width=100 height=150 crop="fill" %}-->
+      <div class="text">
+          <h3><a href="detail.html">{{obj.title}}</a></h3>
+          <p class="price">{{obj.price}} 
+          <p class="buttons" style="margin-bottom: -29px">
+              <a href="{{ obj.get_customer_detail_url }}" class="btn btn-default" style="margin-left: -135px;">View detail</a>
+              <form method='POST' action='{% url "cart:home" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+                 <input type='hidden' name='product_id' value='{{ obj.id }}' />
+                 <button type="submit" class="btn btn-primary" style="margin-top: -18px; margin-left: 107px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+              </form>
+          </p>
+      </div>
+      <!-- /.text -->
+  </div>
+  <!-- /.product -->
+</div>
+<!-- /.products --><!---- {{ obj.id }} -- {{ cart.products.all }}</p>-->

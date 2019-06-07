@@ -1,0 +1,14 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "tags_tag_products" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "tag_id" integer NOT NULL REFERENCES "tags_tag" ("id") DEFERRABLE INITIALLY DEFERRED, "item_id" integer NOT NULL REFERENCES "items_item" ("id") DEFERRABLE INITIALLY DEFERRED);
+INSERT INTO "tags_tag_products" VALUES(13,4,8);
+INSERT INTO "tags_tag_products" VALUES(14,4,2);
+INSERT INTO "tags_tag_products" VALUES(15,4,3);
+INSERT INTO "tags_tag_products" VALUES(16,4,7);
+INSERT INTO "tags_tag_products" VALUES(26,6,21);
+INSERT INTO "tags_tag_products" VALUES(27,6,22);
+INSERT INTO "tags_tag_products" VALUES(28,6,23);
+CREATE UNIQUE INDEX tags_tag_products_tag_id_item_id_610b2acb_uniq ON "tags_tag_products" ("tag_id", "item_id");
+CREATE INDEX "tags_tag_products_tag_id_7ed0fcd2" ON "tags_tag_products" ("tag_id");
+CREATE INDEX "tags_tag_products_item_id_5a4bea2b" ON "tags_tag_products" ("item_id");
+COMMIT;

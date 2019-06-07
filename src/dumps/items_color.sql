@@ -1,0 +1,16 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "items_color" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "color_name" varchar(250) NOT NULL);
+INSERT INTO "items_color" VALUES(2,'pink');
+INSERT INTO "items_color" VALUES(3,'yellow');
+INSERT INTO "items_color" VALUES(4,'purple');
+INSERT INTO "items_color" VALUES(5,'pink');
+INSERT INTO "items_color" VALUES(6,'green');
+INSERT INTO "items_color" VALUES(7,'blue');
+INSERT INTO "items_color" VALUES(8,'red');
+INSERT INTO "items_color" VALUES(9,'brown');
+INSERT INTO "items_color" VALUES(10,'black');
+INSERT INTO "items_color" VALUES(11,'purple');
+INSERT INTO "items_color" VALUES(12,'orange');
+INSERT INTO "items_color" VALUES(13,'gray');
+COMMIT;

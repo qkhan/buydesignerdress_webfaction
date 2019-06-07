@@ -1,7 +1,25 @@
-<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}
+<style>
+.quantity_container {
+    width: 87px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-left: 136px;
+    margin-top: -10px;
+    height: 29px;
+}
+.add_to_wishlist {
+   width:200px; 
+   margin-left:20px; 
+   background-color:#37581f; 
+   border-color:#37581f;
+}
+</style>
+<form class="form-product-ajax" method='POST' action='{% url "cart:home" %}' class="form">{% csrf_token %}
     <input type='hidden' name='product_id' value='{{ object.id }}' />
-    <span class="submit-span">
-        <button type="submit" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+    <input class='quantity_container' type="number" name='qty' value='1' /><br/>
+    <span class="submit-span" style="display:flex;">
+        <button type="submit" class="btn btn-primary" style="width:200px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+        <button type="submit" class="btn btn-primary add_to_wishlist"><i class="fa fa-heart"></i> Add to wishlist</button>
     </span>
 </form>
 

@@ -108,3 +108,12 @@ h1,h2,h3,h4 {
 .active {
     background-color: #ffc3fe !important;
 }
+
+.quantity_container {
+    width: 87px;
+    margin-bottom: 20px;
+    text-align: center;
+    margin-left: 97px;
+    margin-top: -10px;
+    height: 29px;
+}

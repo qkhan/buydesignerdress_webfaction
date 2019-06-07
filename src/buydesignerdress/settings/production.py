@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    #'livesync',
+    #'livereload',
     'django.contrib.staticfiles',
     'widget_tweaks',
     'phonenumber_field',
@@ -49,8 +51,11 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'items',
-    'carts',
-    'orders',
+    's_carts',
+    's_orders',
+    #'e_carts',
+    #'carts',
+    #'orders',
     'search',
     'tags',
     'billing',
@@ -58,6 +63,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    #'livesync.core.middleware.DjangoLiveSyncMiddleware',
+    #'livereload.middleware.LiveReloadScript',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -408,3 +415,4 @@ cloudinary.config(
 #         },
 #     }
 # }
+

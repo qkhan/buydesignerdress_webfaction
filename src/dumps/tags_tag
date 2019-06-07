@@ -1,0 +1,7 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "tags_tag" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "title" varchar(120) NOT NULL, "slug" varchar(50) NOT NULL, "timestamp" datetime NOT NULL, "active" bool NOT NULL);
+INSERT INTO "tags_tag" VALUES(4,'red','red-1','2019-01-12 05:08:55.276377',1);
+INSERT INTO "tags_tag" VALUES(6,'kid','kid-1','2019-01-12 05:22:01.178549',1);
+CREATE INDEX "tags_tag_slug_78c2b8d8" ON "tags_tag" ("slug");
+COMMIT;

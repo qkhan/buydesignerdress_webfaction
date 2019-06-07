@@ -1,0 +1,14 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE "accounts_profile" ("user_id" integer NOT NULL PRIMARY KEY REFERENCES "accounts_myuser" ("id") DEFERRABLE INITIALLY DEFERRED, "city" varchar(120) NULL);
+INSERT INTO "accounts_profile" VALUES(1,NULL);
+INSERT INTO "accounts_profile" VALUES(2,NULL);
+INSERT INTO "accounts_profile" VALUES(3,NULL);
+INSERT INTO "accounts_profile" VALUES(4,NULL);
+INSERT INTO "accounts_profile" VALUES(5,NULL);
+INSERT INTO "accounts_profile" VALUES(6,NULL);
+INSERT INTO "accounts_profile" VALUES(7,NULL);
+INSERT INTO "accounts_profile" VALUES(8,NULL);
+INSERT INTO "accounts_profile" VALUES(9,NULL);
+INSERT INTO "accounts_profile" VALUES(10,NULL);
+COMMIT;
