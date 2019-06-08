@@ -8,18 +8,37 @@
     height: 29px;
 }
 .add_to_wishlist {
-   width:200px; 
-   margin-left:20px; 
+   width:150px; 
+   margin-left:50px; 
    background-color:#37581f; 
    border-color:#37581f;
 }
 </style>
-<form class="form-product-ajax" method='POST' action='{% url "cart:home" %}' class="form">{% csrf_token %}
+{% if object not in cart.products.all %}
+
+<!--<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}-->
+<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' date-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
     <input type='hidden' name='product_id' value='{{ object.id }}' />
     <input class='quantity_container' type="number" name='qty' value='1' /><br/>
     <span class="submit-span" style="display:flex;">
-        <button type="submit" class="btn btn-primary" style="width:200px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+        <button type="submit" class="btn btn-primary" style="width:150px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
         <button type="submit" class="btn btn-primary add_to_wishlist"><i class="fa fa-heart"></i> Add to wishlist</button>
     </span>
 </form>
+{% else %}
+{{ object }}
+<br/>
+QK: {{ cart }} 
+<!--<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}-->
+<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' date-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+    <input type='hidden' name='product_id' value='{{ object.id }}' />
+    <input type='hidden' name='remove_id' value='{{ object.id }}' />
+    <input class='quantity_container' type="number" name='qty' value='1' /><br/>
+    <span class="submit-span" style="display:flex;">
+        <button type="submit" class="btn btn-primary" style="width:150px;"><i class="fa fa-shopping-cart"></i> Remove</button>
+        <button type="submit" class="btn btn-primary add_to_wishlist"><i class="fa fa-heart"></i> Add to wishlist</button>
+    </span>
+</form>
+{% endif %}
+
 

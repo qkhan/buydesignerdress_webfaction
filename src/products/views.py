@@ -10,6 +10,10 @@ from itertools import chain
 from django.forms.models import model_to_dict
 from django.db.models import Q
 import pdb
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 from django import template
 
@@ -100,9 +104,9 @@ class ProductListView(ListView):
         #print("ITEMS: ", item_list)
         
         cart_obj, new_obj = Cart.objects.new_or_get(self.request)
-        #print ("CART OBJECT : PRODUCT LIST: ", cart_obj)
+        logger.info("CART OBJECT : PRODUCT LIST: {}".format(cart_obj))
         #print ("NEW OBJECT: PRODUCT LIST: ", new_obj)
-        #print ("CART OBJECT LIST: " , cart_obj.products.all())
+        logger.info("CART OBJECT LIST: {}".format(cart_obj.products.all()))
         #context['cart'] = cart_obj
 
         context = {
@@ -224,6 +228,8 @@ class ProductDetailSlugView(DetailView):
         except:
             raise Http404("Issue accessing the web page")
 
+        cart_obj, new_obj = Cart.objects.new_or_get(self.request)
+        logger.info("CART OBJECT : PRODUCT LIST: {}".format(cart_obj))
         #instance.colorQK = "red"
        #print ("Instance: ", instance)
         context = {
@@ -242,6 +248,7 @@ class ProductDetailSlugView(DetailView):
             "prospect_list": prospect_list,
             "prospect_type": prospect_type,
             "category_type": category_type,
+            "cart"         : cart_obj,
         }
 
         return context

@@ -71,10 +71,8 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
-"""
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
     logger.info("ACTION: {}".format(action))
-    print("ACTION: {}".format(action))
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
         products = instance.products.all()
         total = 0
@@ -96,4 +94,3 @@ def pre_save_cart_receiver(sender, instance, *args, **kwargs):
         instance.total = 0.00
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
-"""

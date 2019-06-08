@@ -43,23 +43,23 @@ def cart_home(request):
     products = cart_obj.products.all()
 
     logger.info("CART OBJ : {}".format(cart_obj))
+    print(products)
     cart_obj.quantity = 2
     total = 0
     for x in products:
         total += x.price
     cart_obj.total = total
     cart_obj.save()
+    print("Total Price : {}".format(total))
     logger.info("Total Price : {}".format(total))
     return render(request, "carts/basket.html", {"cart": cart_obj})
 
 def cart_update(request):
-    logger.info("Request.POST: {}".format(request.POST))
-    logger.info("Request.IS AJAX: {}".format(request.is_ajax()))
+    print("QAISAR KHAN")
+    print(request.POST)
     product_id = request.POST.get('product_id')
     remove_id = request.POST.get('remove_id')
     qty = request.POST.get('qty')
-    if not qty:
-        qty = 1
     if product_id is not None:
         try:
             product_obj = Item.objects.get(id=product_id)
@@ -81,7 +81,7 @@ def cart_update(request):
             added = True
         request.session['cart_items'] = cart_obj.products.count()
         if request.is_ajax():
-            logger.info("Ajax request: {}".format(cart_obj))
+            print("Ajax request")
             json_data = {
                 "added":added,
                 "removed": not added,

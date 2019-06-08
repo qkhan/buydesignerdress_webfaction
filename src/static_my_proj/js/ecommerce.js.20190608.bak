@@ -98,8 +98,7 @@ $(document).ready(function() {
     event.preventDefault()
     console.log("QK: Form is not sending")
     var thisForm = $(this)
-    //var actionEndpoint = thisForm.attr("action")
-    var actionEndpoint = thisForm.attr("date-endpoint")
+    var actionEndpoint = thisForm.attr("action")
     var httpMethod = thisForm.attr("method")
     var formData = thisForm.serialize();
     console.log("actionEndpoint");
@@ -122,10 +121,10 @@ $(document).ready(function() {
         if (currentPath.indexOf("cart") == -1) {
             var submitSpan = thisForm.find(".submit-span")
             if (data.added) {
-                submitSpan.html("<input type='hidden' name='remove_id' value='{{ object.id }}' /><button type='submit' class='btn btn-primary' style='width:150px;'><i class='fa fa-shopping-cart'></i> Remove</button> <button type='submit' class='btn btn-primary add_to_wishlist'><i class='fa fa-heart'></i> Add to wishlist</button>");
+                submitSpan.html("<button type='submit' class='btn btn-danger'><i class='fa fa-shopping-cart'></i>Remove</button>");
             }
             else {
-                submitSpan.html("<button type='submit' class='btn btn-primary' style='width:150px;'><i class='fa fa-shopping-cart'></i> Add to Cart</button> <button type='submit' class='btn btn-primary add_to_wishlist'><i class='fa fa-heart'></i> Add to wishlist</button>");
+                submitSpan.html("<button type='submit' class='btn btn-primary'><i class='fa fa-shopping-cart'></i>Add to Cart</button>");
             }
         }
         console.log("currentPath");
@@ -161,7 +160,7 @@ $(document).ready(function() {
 
     var currentUrl = window.location.href
     var refreshCartUrl = '/api/cart/'
-    var refreshCartMethod = "POST"
+    var refreshCartMethod = "GET"
     var data = {}
     $.ajax({
       url: refreshCartUrl,
