@@ -1,0 +1,306 @@
+{% load crispy_forms_tags %}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+.django-ckeditor-widget { width:350px; }
+</style>
+<div class="container">
+       <form method='POST' action='' enctype="multipart/form-data" style="margin-top:5px; !important">{% csrf_token %}
+       <table class="table table-striped">
+          <tbody>
+             <tr>
+                <td colspan="1">
+                   <div class="well form-horizontal"> 
+                      <fieldset>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Dress Category</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                    {{ form.categoryID | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Brand Name</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                    </span>
+                                    {{ form.brandID| as_crispy_field }}
+                                </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Prospect</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                    </span>
+                                    {{ form.prospectID | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Country</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-list"></i>
+                                 </span>
+                                 {{ form.countryID | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Slug</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                   <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.slug | as_crispy_field }}
+                                 </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">SKU</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.sku | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Name</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.title | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Price</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.price | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Color</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.color | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Size</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.size | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Weight</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.weight | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Cart Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.cartDesc | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Stock</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                 <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-home"></i>
+                                 </span>
+                                 {{ form.stock | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Short Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" id="txtCkEditor">
+                                 {{ form.shortDesc | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Material And Care</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" id="txtCkEditor">
+                                 {{ form.materialAndCare | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Fitting</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" id="txtCkEditor">
+                                 {{ form.fitting | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Detailed Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" id="txtCkEditor">
+                                 {{ form.longDesc | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                      </fieldset>
+                   </div>
+                </td>
+                <td colspan="1">
+                   <div class="well form-horizontal"> 
+                      <fieldset>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Thumbnail</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.thumb_image | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 1</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image1 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 2</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image2 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 3</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image3 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 4</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image4 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 5</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image5 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Image 6</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group" style="width: 285px;">
+                                {{ form.image6 | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Location</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                {{ form.location | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Live Product</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                {{ form.live | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product is Limited</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                {{ form.itemLimited | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Product Feature</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                {{ form.featured| as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                         <div class="form-group">
+                            <label class="col-md-4 control-label">Is Product Active</label>
+                            <div class="col-md-8 inputGroupContainer">
+                               <div class="input-group">
+                                {{ form.active | as_crispy_field }}
+                               </div>
+                            </div>
+                         </div>
+                      </fieldset>
+                   </div>
+                      <input class='button' style="float: right;" type='submit'
+                          value='{% if btn_title %}{{ btn_title }} {% else %}Submit{% endif %}' />
+                </td>
+             </tr>
+          </tbody>
+       </table>
+
+       </form>
+    </div>
+

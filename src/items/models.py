@@ -212,6 +212,8 @@ class Item(models.Model):
     sku  = models.CharField(max_length=100, blank=True, null=True)
     title = models.CharField(max_length=120)
     price = models.DecimalField(decimal_places=2, max_digits=20, default=0)
+    discount = models.DecimalField(decimal_places=2, max_digits=20, default=0)
+    priceMinusDiscount = models.DecimalField(decimal_places=2, max_digits=20, default=0)
     size = MultiSelectField(choices=SIZE_CHOICES)
     weight = models.DecimalField(decimal_places=2, max_digits=20, default=0)
     cartDesc = models.CharField(max_length=120, blank=True, null=True)
@@ -304,12 +306,12 @@ def item_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = unique_slug_generator(instance)
     if instance.longDesc:
-        print("DESC:", instance.longDesc)
+        #print("DESC:", instance.longDesc)
         #pattern = re.compile('([^\s\w]|_)+')
         pattern = re.compile('^\W+')
         #strippedList = pattern.sub('', value)
         instance.longDesc = re.sub(r'^\W+$', '', instance.longDesc)
-        print("AFTER DESC:", instance.longDesc)
+        #print("AFTER DESC:", instance.longDesc)
 pre_save.connect(item_pre_save_receiver, sender=Item)
 
 # class ItemOptions(models.Model):

@@ -33,25 +33,26 @@
                             </tr>
                         </thead>
                         <tbody class="cart-body">
-                            {% for product in cart.products.all %}
+                            {% for product in products %}
                             <tr class='cart-product'>
                                 <!-- <form action="." method="GET">-->
                                 <form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}
                                 <input type='hidden' name='product_id' value='{{ product.id }}' />
                                 <td>
-                                    <a href="{{ product.get_customer_detail_url }}">
-                                        <img src="{{ product.image1.url }}" alt="">
+                                    <a href="{{ product.url }}">
+                                        <img src="{{ product.image }}" alt="">
                                     </a>
                                 </td>
-                                <td><a href="{{ product.get_customer_detail_url }}">{{ product.name }} </a>
+                                <td><a href="{{ product.image_link }}">{{ product.id }} - {{ product.name}}</a>
                                 </td>
                                 <td>
-                                    <input type="number" class='item-qty' name='qty' value={{ cart.quantity }} class="form-control" />
+                                    <input type="number" class='item-product' name='qty_productid' value={{ product.id }} class="form-control" style="display:none; "/>
+                                    <input type="number" class='item-qty' name='qty' value={{ product.item_qty }} class="form-control" />
                                     <input type="submit" class='btn-update btn btn-link' value='Update Item' style='display:none'/>
                                 </td>
                                 <td>{{ product.price }}</td>
-                                <td>$0.00</td>
-                                <td>$246.00</td>
+                                <td>{{ product.discount }} </td>
+                                <td>{{ product.priceMinusDiscount }}</td>
                                 </form>
 
                                 <td>
@@ -59,13 +60,6 @@
                                 {% include 'carts/snippets/remove_product.html' with product_id=product.id %}
                                 </div>
                                 </td>
-                                <!--<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}
-                                    <input type='hidden' name='product_id' value='{{ product.id }}' />
-                                        <span class="submit-span">
-                                            <button type="submit" class="btn btn-link"><i class="fa fa-trash-o"></i></button>
-                                        </span>
-                                </form>
-                                -->
                             </tr>
                             {% endfor %}
                         </tbody>

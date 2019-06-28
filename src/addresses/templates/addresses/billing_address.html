@@ -16,20 +16,16 @@
     <div class="col-md-9" id="checkout">
 
         <div class="box">
-            <form method="post" action="{% url 'e_carts:checkout' %}"> {% csrf_token %}
+            <form method="post" action="{% url 'cart:checkout' %}"> {% csrf_token %}
                 <input type='hidden' name='user' value='{{ cart.user }}' />
                 <input type='hidden' name='address_type' value='shipping'/>
                 <input type='hidden' name='order_id' value='{{ object.order_id }}'/>
                 <h1>Checkout</h1>
                 <ul class="nav nav-pills nav-justified">
-                    <li class="active"><a href="#"><i class="fa fa-map-marker"></i><br>Address</a>
-                    </li>
-                    <li class="disabled"><a href="#"><i class="fa fa-truck"></i><br>Delivery Method</a>
-                    </li>
-                    <li class="disabled"><a href="#"><i class="fa fa-money"></i><br>Payment Method</a>
-                    </li>
-                    <li class="disabled"><a href="#"><i class="fa fa-eye"></i><br>Order Review</a>
-                    </li>
+                    <li class="active"><a href="{% url 'carts:checkout' %}"><i class="fa fa-map-marker"></i><br>Address</a> </li>
+                    <li class="disabled"><a href="{{ cart_shipping_url }}"><i class="fa fa-truck"></i><br>Delivery Method</a> </li>
+                    <li class="disabled"><a href="{% url 'carts:payment' %}"><i class="fa fa-money"></i><br>Payment Method</a> </li>
+                    <li class="disabled"><a href="{% url 'carts:review' %}"><i class="fa fa-eye"></i><br>Order Review</a> </li>
                 </ul>
 
                 <div class="content">

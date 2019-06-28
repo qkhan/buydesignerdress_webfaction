@@ -13,24 +13,26 @@ User = settings.AUTH_USER_MODEL
 
 class CartManager(models.Manager):
 
+        
+
     def new_or_get(self, request):
         cart_id = request.session.get("cart_id", None)
-        logger.info("MODEL Cart ID: {}".format(cart_id))
+        #logger.info("MODEL Cart ID: {}".format(cart_id))
         qs = self.get_queryset().filter(id=cart_id)
-        logger.info("QUERY SET COUNT: {}".format(qs.count()))
+        #logger.info("QUERY SET COUNT: {}".format(qs.count()))
         if qs.count() == 1:
             new_obj = False
             cart_obj = qs.first()
-            logger.info("REQUEST USER : {}".format(request.user))
+            #logger.info("REQUEST USER : {}".format(request.user))
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
-                logger.info("CART OBJ USER: {}".format(cart_obj.user))
+                #logger.info("CART OBJ USER: {}".format(cart_obj.user))
                 cart_obj.save()
             return cart_obj, new_obj
         else:
             cart_obj = Cart.objects.new(user=request.user)
             new_obj = True
-            logger.info("NEW CART OBJ ID: {}".format(cart_obj.id))
+            #logger.info("NEW CART OBJ ID: {}".format(cart_obj.id))
             request.session['cart_id'] = cart_obj.id
         return cart_obj, new_obj
 
@@ -38,22 +40,53 @@ class CartManager(models.Manager):
     def new(self, user=None):
         user_obj = None
         if user is not None:
-            logger.info("USER: {}".format(user))
+            #logger.info("USER: {}".format(user))
             if user.is_authenticated:
                 user_obj = user
-                logger.info("User Object: {}".format(user_obj.username))
+                #logger.info("User Object: {}".format(user_obj.username))
         return self.model.objects.create(user=user_obj)
 
+class CartItemDetailsManager(models.Manager):
+    
+    def get_product(self, cart_obj, product_id):
+        qs = self.get_queryset().filter(cart=cart_obj, product_id=product_id)
+        cartitem_obj = qs.first()
+        return cartitem_obj
+        
 
-#class CartItem(models.Model):
-    #cart = models.ForeignKey("Cart", on_delete=models.CASCADE)
-    #item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    #quantity = models.PositiveIntegerField(default=1)
-    ##line item total
+    def new_or_get(self, cart_obj, product_id, quantity):
+        logger.info("CartItemDetails MODEL Cart OBJECT ID: {}".format(cart_obj.id))
+        qs = self.get_queryset().filter(cart=cart_obj, product_id=product_id)
+        logger.info("CartItemDetails MODEL Cart Current COUNT: {}".format(qs.count()))
 
-    #def __unicode__(self):
-        #return self.item.title
+        if qs.count() == 1:
+            new_obj = False
+            cartitem_obj = qs.first()
+            cartitem_obj.product_id = product_id
+            cartitem_obj.prd_qty = quantity
+            cartitem_obj.save()
+            return cartitem_obj, new_obj
+        else:
+            cartitem_obj = CartItemDetails.objects.create(cart=cart_obj)
+            cartitem_obj.product_id = product_id
+            cartitem_obj.prd_qty = quantity
+            cartitem_obj.save()
+            new_obj = True
+            logger.info("NEW CartItemDetails OBJ ID: {}".format(cartitem_obj.id))
+        return cartitem_obj, new_obj
 
+
+class CartItemDetails(models.Model):
+    cart = models.ForeignKey("Cart", on_delete=models.CASCADE)
+    product_id = models.IntegerField(default=0)
+    prd_qty = models.IntegerField(default=0)
+    prd_discount = models.IntegerField(default=0)
+    prd_total = models.IntegerField(default=0)
+
+    objects = CartItemDetailsManager()
+
+    def __str__(self):
+        return str(self.id)
 
 # Create your models here.
 class Cart(models.Model):
@@ -72,12 +105,13 @@ class Cart(models.Model):
         return str(self.id)
 
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
-    logger.info("ACTION: {}".format(action))
+    #logger.info("ACTION: {}".format(action))
     if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
         products = instance.products.all()
         total = 0
         for x in products:
-            total += x.price
+            priceMinusDiscount = x.price - x.discount
+            total += priceMinusDiscount
         #instance.total = total
         #instance.save()
 

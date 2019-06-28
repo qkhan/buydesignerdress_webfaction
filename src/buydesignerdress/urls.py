@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-#from e_carts.views import cart_detail_api_view
+from s_carts.views import cart_detail_api_view
 from accounts.views import register,user_login, home, user_logout, login_page, guest_register_view
 from .views import home_page, about_page, contact_page, category_page
 
@@ -34,9 +34,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     #path('cart/', cart_home, name='cart'),
     #path('cart/', include('e_carts.urls', namespace='cart')),
-    path('s_cart/', include('s_carts.urls', namespace='cart')),
+    path('cart/', include('s_carts.urls', namespace='cart')),
     path('logout/', user_logout),
-    #path('api/cart/', cart_detail_api_view, name='api-cart'),
+    path('api/cart/', cart_detail_api_view, name='api-cart'),
     path('', home_page, name='home'),
     path('category/', category_page, name='category'),
     path('about/', about_page, name='about'),

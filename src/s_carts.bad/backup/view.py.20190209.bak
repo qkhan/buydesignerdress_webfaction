@@ -1,0 +1,138 @@
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from items.models import Item
+from orders.models import Order
+from .models import Cart
+import logging
+import math 
+import  pdb
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+#logger.setLevel(logging.DEBUG)
+# Create your views here.
+
+
+def cart_detail_api_view(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    products = [ {
+                    "id":x.id,
+                    "url":x.get_absolute_url(),
+                    "name": x.name, 
+                    "price": x.price,
+                    "image": x.image1.url,
+                    "image_link": x.get_customer_detail_url()
+                 } 
+                 for x in cart_obj.products.all()]
+    print("products")
+    print(products)
+    cart_data = {"products": products, "subtotal": cart_obj.subtotal, "total": cart_obj.total}
+    return JsonResponse(cart_data)
+
+def cart_create(user=None):
+    cart_obj = Cart.objects.create(user=None)
+    print('New Cart created')
+    return cart_obj
+
+def cart_home(request):
+    cart_obj, new_obj = Cart.objects.new_or_get(request)
+    print("cart obj")
+    products = cart_obj.products.all()
+    total = 0
+    for x in products:
+        total += x.price
+    cart_obj.total = total
+    cart_obj.save()
+    #print("Total Price : {}".format(total))
+    logger.info("Total Price : {}".format(total))
+    return render(request, "carts/basket.html", {"cart": cart_obj})
+
+def cart_update(request):
+    print("QAISAR KHAN")
+    print(request.POST)
+    product_id = request.POST.get('product_id')
+    remove_id = request.POST.get('remove_id')
+    if product_id is not None:
+        try:
+            product_obj = Item.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            print("Show message to user, product is gone?")
+            return redirect("cart:home")
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
+        print("Cart Objects")
+        print(cart_obj)
+        if remove_id is not None:
+            print("Product Obj: ", product_obj)
+            cart_obj.products.remove(product_obj)
+            added = False
+        else:
+            cart_obj.products.add(product_obj)
+            added = True
+        request.session['cart_items'] = cart_obj.products.count()
+        if request.is_ajax():
+            print("Ajax request")
+            json_data = {
+                "added":added,
+                "removed": not added,
+                "cartItemCount": cart_obj.products.count()
+            }
+            #return JsonResponse(json_data)
+            return JsonResponse({"message": "Error 400"}, status = 400)
+    return redirect("cart:home")
+
+
+def cart_remove(request):
+    print("REMOVE")
+    print(request.POST)
+    return redirect("cart:home")
+    
+    """
+    product_id = request.POST.get('product_id')
+    if product_id is not None:
+        try:
+            product_obj = Item.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            print("Show message to user, product is gone?")
+            return redirect("cart:home")
+        cart_obj, new_obj = Cart.objects.new_or_get(request)
+        print("Cart Objects")
+        print(cart_obj)
+        if product_obj in cart_obj.products.all():
+            print("Product Obj: ", product_obj)
+            cart_obj.products.remove(product_obj)
+        request.session['cart_items'] = cart_obj.products.count()
+    """
+
+
+
+def checkout_home(request):
+    cart_obj, cart_created = Cart.objects.new_or_get(request)
+    order_obj = None
+    if cart_created or cart_obj.products.count() == 0:
+        return redirect("cart:home")
+    else:
+        order_obj, new_order_obj = Order.objects.get_or_create(cart=cart_obj)
+
+    print("Request:")
+    print(request)
+    user = request.user
+    billing_profile = None
+    if user.is_authenticated:
+        billing_profile = None
+
+    context = {
+        "object": order_obj,
+        "billing_profile": billing_profile
+    }
+
+    return render(request, "carts/checkout1.html", context)
+
+
+
+
+#print(dir(request.session))
+#request.session.set_expiry(300) # 5 minutes
+# key = request.session.session_key
+# logger.info("SESSION KEY: {}".format(key))
+# request.session['cart_id'] = 12
+# request.session['user'] = request.user.username

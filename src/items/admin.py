@@ -5,7 +5,8 @@ from django.contrib import admin
 from .models import Item, Category, Brand, Prospect, Country, Color, ProductType
 from .forms import ItemModelForm
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'slug']
+    list_display = ['slug', 'title', 'price', 'discount', 'cartDesc']
+    fields = ('added_by', 'last_edited_by', 'slug', 'sku', 'title', 'price', 'discount', 'size', 'weight', 'cartDesc', 'shortDesc', 'materialAndCare', 'color', 'fitting', 'longDesc')
 
     #readonly_fields = ['updated', 'timestamp', 'added_by', 'last_edited_by']
     readonly_fields = ['updated', 'timestamp']

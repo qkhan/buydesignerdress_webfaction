@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Cart #, CartItem
+from .models import Cart, CartItemDetails
 
 """
 class CartItemInline(admin.TabularInline):
@@ -17,3 +17,4 @@ class CartAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Cart)
+admin.site.register(CartItemDetails)

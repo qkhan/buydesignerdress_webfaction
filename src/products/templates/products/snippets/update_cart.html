@@ -1,42 +1,34 @@
 <style>
-.quantity_container {
-    width: 87px;
-    margin-bottom: 20px;
-    text-align: center;
-    margin-left: 136px;
-    margin-top: -10px;
-    height: 29px;
+@media screen and (min-width: 0px) and (max-width: 700px) {
+           .view_desktop { margin-left: 50px;   }
+            .add_to_cart { margin-right: 20px;  }
+            .remove_from_cart { margin-right: 20px; }
 }
-.add_to_wishlist {
-   width:150px; 
-   margin-left:50px; 
-   background-color:#37581f; 
-   border-color:#37581f;
+@media screen and (min-width: 701px) and (max-width: 3000px) {
+   .add_to_cart { width: 150px; margin-right: 27px; margin-left: 20px; }
+   .remove_from_cart { margin-left: 20px; width: 130px; margin-right: 37px; }
 }
-</style>
-{% if object not in cart.products.all %}
 
+</style>
+
+
+{% if object not in cart.products.all %}
 <!--<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}-->
-<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' date-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
-    <input type='hidden' name='product_id' value='{{ object.id }}' />
-    <input class='quantity_container' type="number" name='qty' value='1' /><br/>
-    <span class="submit-span" style="display:flex;">
-        <button type="submit" class="btn btn-primary" style="width:150px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
+<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+    <span class="submit-span" style="">
+        <input type='hidden' name='product_id' value='{{ object.id }}' />
+        <button type="submit" class="btn btn-primary add_to_cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
         <button type="submit" class="btn btn-primary add_to_wishlist"><i class="fa fa-heart"></i> Add to wishlist</button>
     </span>
 </form>
 {% else %}
-{{ object }}
-<br/>
-QK: {{ cart }} 
 <!--<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' class="form">{% csrf_token %}-->
-<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' date-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+<form class="form-product-ajax" method='POST' action='{% url "cart:update" %}' data-endpoint='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+    <span class="submit-span" style="">
     <input type='hidden' name='product_id' value='{{ object.id }}' />
     <input type='hidden' name='remove_id' value='{{ object.id }}' />
-    <input class='quantity_container' type="number" name='qty' value='1' /><br/>
-    <span class="submit-span" style="display:flex;">
-        <button type="submit" class="btn btn-primary" style="width:150px;"><i class="fa fa-shopping-cart"></i> Remove</button>
-        <button type="submit" class="btn btn-primary add_to_wishlist"><i class="fa fa-heart"></i> Add to wishlist</button>
+        <button type="submit" class="btn btn-primary remove_from_cart" ><i class="fa fa-trash-o"></i> Remove</button>
+        <button type="submit" class="btn btn-primary"><i class="fa fa-heart"></i> Add to wishlist</button>
     </span>
 </form>
 {% endif %}

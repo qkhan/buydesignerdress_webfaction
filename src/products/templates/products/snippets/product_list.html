@@ -1,4 +1,13 @@
 {% load static %}
+<style>
+@media screen and (min-width: 0px) and (max-width: 700px) {
+       .view_desktop { margin-left: 50px;   }
+}
+@media screen and (min-width: 701px) and (max-width: 3000px) {
+       .view_desktop { margin-left: 0px;   }
+}
+
+</style>
 {% load cloudinary %}
 <div class="col-md-4 col-sm-6">
   <div class="product">
@@ -25,29 +34,23 @@
           <img src="{{ obj.image3.url }}" alt="" class="img-responsive" style="height: 275px; width:183px;">
           {% endif %}
       </a>
-                      <!-- {% cloudinary "obj.image2.url" width=100 height=150 crop="fill" %}-->
+      <!-- {% cloudinary "obj.image2.url" width=100 height=150 crop="fill" %}-->
       <div class="text">
-          <h3><a href="detail.html">{{obj.title}}</a></h3>
-          <p class="price">{{ obj.id }} | {{obj.price}}</p>
-          <p class="buttons" style="margin-bottom: -29px">
-            <span>
-              <a href="{{ obj.get_customer_detail_url }}" class="btn btn-default" style="margin-left: -135px;">View detail</a>
-            </span>
-            <span>
-              <br/>
-            {% if obj not in cart.products.all %} 
-              <form method='POST' action='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
-                 <input type='hidden' name='product_id' value='{{ obj.id }}' />
-                 <button type="submit" class="btn btn-primary" style="margin-top: -18px; margin-left: 107px;"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-              </form>
+        <h3><a href="detail.html">{{ obj.title }}</a></h3>
+        <p class="price">{{ obj.price }}</p>
+        <form method='POST' action='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
+
+        <p class="buttons view_desktop">
+            <a href="{{ obj.get_customer_detail_url }}" class="btn btn-default">View detail</a>
+            {% if obj not in cart.products.all %}
+            <input type='hidden' name='product_id' value='{{ obj.id }}' />
+            <button type="submit" class="btn btn-primary" style=""><i class="fa fa-shopping-cart"></i> Add to cart</button>
             {% else %}
-              <form method='POST' action='{% url "cart:update" %}' class="form" style="display:inline-block !important;">{% csrf_token %}
-                 <input type='hidden' name='remove_id' value='{{ obj.id }}' />
-                 <button type="submit" class="btn btn-primary" style="margin-top: -18px; margin-left: 107px;"><i class="fa fa-shopping-cart"></i> Remove</button>
-              </form>
+            <input type='hidden' name='remove_id' value='{{ obj.id }}' />
+            <button type="submit" class="btn btn-primary" style=""><i class="fa fa-shopping-cart"></i> Remove</button>
             {% endif %}
-            </span>
-          </p>
+        </p>
+        </form>
       </div>
       <!-- /.text -->
   </div>
