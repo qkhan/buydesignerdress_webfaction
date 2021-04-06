@@ -12,7 +12,7 @@ django-js-asset==1.1.0
 django-multiselectfield==0.1.8
 django-phonenumber-field==2.1.0
 django-phonenumbers==1.0.1
-django-registration==2.3
+django-registration==3.1.2
 django-widget-tweaks==1.4.3
 idna==2.1
 mock==2.0.0
