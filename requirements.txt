@@ -1,6 +1,6 @@
 Babel==2.6.0
 braintree==3.29.2
-certifi==2018.11.29
+certifi==2022.12.7
 cloudinary==1.15.0
 confusable-homoglyphs==2.0.2
 Django==2.0.9
